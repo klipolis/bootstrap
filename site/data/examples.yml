@@ -31,6 +31,8 @@
       description: "Nothing but the basics: compiled CSS and JavaScript."
     - name: Grid
       description: "Multiple examples of grid layouts with all four tiers, nesting, and more."
+    - name: Offcanvas
+      description: "Turn your expandable navbar into a sliding offcanvas menu."
 
 - category: Navbars
   description: "Taking the default navbar component and showing how it can be moved, placed, and extended."
@@ -49,8 +51,6 @@
   examples:
     - name: Floating labels
       description: "Beautifully simple forms with floating labels over your inputs."
-    - name: Offcanvas
-      description: "Turn your expandable navbar into a sliding offcanvas menu."
 
 - category: Integrations
   description: "Integrations with external libraries."

@@ -65,3 +65,7 @@
     @include border-radius(.25rem);
   }
 }
+
+.offcanvas{
+  z-index: 1072 // over .bd-subnavbar
+}

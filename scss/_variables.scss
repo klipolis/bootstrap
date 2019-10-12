@@ -805,10 +805,11 @@ $form-validation-states: map-merge(
 $zindex-dropdown:                   1000 !default;
 $zindex-sticky:                     1020 !default;
 $zindex-fixed:                      1030 !default;
-$zindex-modal-backdrop:             1040 !default;
-$zindex-modal:                      1050 !default;
-$zindex-popover:                    1060 !default;
-$zindex-tooltip:                    1070 !default;
+$zindex-offcanvas:                  1040 !default;
+$zindex-modal-backdrop:             1050 !default;
+$zindex-modal:                      1060 !default;
+$zindex-popover:                    1070 !default;
+$zindex-tooltip:                    1080 !default;
 
 
 // Navs
@@ -1213,6 +1214,24 @@ $close-font-size:                   $font-size-base * 1.5 !default;
 $close-font-weight:                 $font-weight-bold !default;
 $close-color:                       $black !default;
 $close-text-shadow:                 0 1px 0 $white !default;
+
+
+//Offcanvas
+
+$offcanvas-padding-y:              $spacer !default;
+$offcanvas-padding-x:              $spacer * 2 !default;
+
+$offcanvas-horizontal-width:        390px !default;
+$offcanvas-horizontal-width-mobile: 100% !default;
+$offcanvas-vertical-max-height:     200px !default;
+$offcanvas-vertical-max-height-mobile:  50% !default;
+$offcanvas-mobile-breakpoint:       md !default;
+$offcanvas-transition-duration:     .3s !default;
+$offcanvas-shadow:                  0 0 1rem rgba(0, 0, 0, .6) !important !default;
+$offcanvas-bg-color:                $white !default;
+$offcanvas-color:                $black !default;
+
+$offcanvas-body-blur-color:         rgba(252, 255, 255, .4) !default;
 
 
 // Code
