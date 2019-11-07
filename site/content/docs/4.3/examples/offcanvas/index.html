@@ -46,7 +46,7 @@ extra_css:
     <a class="nav-link active" href="#">Dashboard</a>
     <a class="nav-link" href="#">
       Friends
-      <span class="badge bg-light rounded-pill align-text-bottom">27</span>
+      <span class="badge bg-dark rounded-pill align-text-bottom">27</span>
     </a>
     <a class="nav-link" href="#">Explore</a>
     <a class="nav-link" href="#">Suggestions</a>
@@ -59,30 +59,28 @@ extra_css:
 </div>
 
 <main class="container pt-5 d-flex flex-column align-items-center min-vh-100" role="main">
-
-
   <div class="my-4">
-    <ul class="">
-      <li> By default, when offcanvas os showing, cannot be scrolled.</li>
+    <ul>
+      <li>By default, when offcanvas is showing, the page cannot be scrolled</li>
       <li>The <strong>same</strong> rule applies when offcanvas causes body bluring</li>
-      <li>We can enable body scrolling, if offcanvas have a <strong>data-body="scroll"</strong> attribute</li>
-      <li>Below you can see many color variations except the default. We can achieve that using <i>'background-color'</i> & <i>'text-color'</i> utilities</li>
+      <li>We can enable body scrolling, if offcanvas has a <strong>data-body="scroll"</strong> attribute</li>
+      <li>Below you can see a few color variations apart from the default. We can achieve this using our color utilities</li>
     </ul>
   </div>
-  <div class="my-4">
 
+  <div class="my-4">
     <button aria-controls="offcanvasExample" aria-expanded="false" class="btn btn-light" data-target="#offcanvasExample" data-toggle="offcanvas" type="button">
       Simple Offcanvas
     </button>
 
-    <div class="offcanvas offanvas-push-body " id="offcanvasExample" tabindex="-1">
+    <div class="offcanvas offanvas-push-body" id="offcanvasExample" tabindex="-1">
       <div class="offcanvas-header">
         <div class="h4 col text-center">Offcanvas</div>
         <button aria-label="Close" class="close text-reset" data-dismiss="offcanvas" type="button">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="card card-body text-dark ">
+      <div class="card card-body text-dark">
         Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
         sapiente ea proident.
       </div>
@@ -101,12 +99,11 @@ extra_css:
   </div>
 
   <div class="my-4">
-
     <button aria-controls="offcanvasExample2" aria-expanded="false" class="btn btn-info" data-target="#offcanvasExample2" data-toggle="offcanvas" type="button">
       Right offcanvas
     </button>
 
-    <div class="offcanvas bg-info  text-white offcanvas-right" id="offcanvasExample2" tabindex="-1">
+    <div class="offcanvas bg-info text-white offcanvas-right" id="offcanvasExample2" tabindex="-1">
       <div class="offcanvas-header">
         <div class="h4 col text-center">Offcanvas Right Side</div>
         <button aria-label="Close" class="close text-reset" data-dismiss="offcanvas" type="button">
@@ -118,11 +115,10 @@ extra_css:
   </div>
 
   <div class="my-4">
-
     <button aria-controls="offcanvasExample3" aria-expanded="false" class="btn btn-dark" data-target="#offcanvasExample3" data-toggle="offcanvas" type="button">
       Bottom offcanvas
     </button>
-    <div class="offcanvas bg-dark text-white  offcanvas-bottom" id="offcanvasExample3" tabindex="-1">
+    <div class="offcanvas bg-dark text-white offcanvas-bottom" id="offcanvasExample3" tabindex="-1">
       <div class="offcanvas-header">
         <div class="h4 col text-center">Offcanvas Bottom</div>
         <button aria-label="Close" class="close text-reset" data-dismiss="offcanvas" type="button">
@@ -133,7 +129,6 @@ extra_css:
   </div>
 
   <div class="my-4">
-
     <button aria-controls="offcanvasExample4" aria-expanded="false" class="btn btn-danger" data-target="#offcanvasExample4" data-toggle="offcanvas" type="button">
       Body allow scrolling
     </button>
@@ -143,18 +138,15 @@ extra_css:
         <div class="h4 col text-center">Body Cannot Scroll</div>
       </div>
     </div>
-
-
   </div>
   <div class="my-4">
     <button aria-controls="offcanvasExample5" aria-expanded="false" class="btn btn-warning" data-target="#offcanvasExample5" data-toggle="offcanvas" type="button">
       Body blurring
     </button>
-    <div class="offcanvas bg-warning " data-body="blur" id="offcanvasExample5" tabindex="-1">
+    <div class="offcanvas bg-warning" data-body="blur" id="offcanvasExample5" tabindex="-1">
       <div class="offcanvas-header">
         <div class="h4 col text-center">Body is Blurred</div>
       </div>
     </div>
   </div>
-
 </main>

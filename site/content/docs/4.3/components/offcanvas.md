@@ -8,7 +8,7 @@ toc: true
 
 ## How it works
 
-The offcanvas JavaScript plugin is used to show and hide a sidebar (or bottom-bar). Buttons or anchors are used as triggers, to specific elements you toggle. 
+The offcanvas JavaScript plugin is used to show and hide a sidebar (or bottom-bar). Buttons or anchors are used as triggers, to specific elements you toggle.
 
 Given how CSS handles animations, you cannot use `margin` & `translate` on a `.offcanvas` element. Use the class on an independent wrapping element.
 
@@ -64,7 +64,7 @@ You can use a link with the `href` attribute, or a button with the `data-target`
   <button class="btn btn-primary" type="button" data-toggle="offcanvas" data-target="#offcanvasExample2" aria-expanded="false" aria-controls="offcanvasExample2">Toggle Right offcanvas</button>
   <button class="btn btn-primary" type="button" data-toggle="offcanvas" data-target="#offcanvasExample3" aria-expanded="false" aria-controls="offcanvasExample3">Toggle Bottom offcanvas</button>
 </p>
-<div class="offcanvas bg-dark  text-white offcanvas-right" tabindex="-1" id="offcanvasExample2">
+<div class="offcanvas bg-dark text-white offcanvas-right" tabindex="-1" id="offcanvasExample2">
   <div class="offcanvas-header">
     <div class="h4 col text-center">Offcanvas Right Side</div>
     <button type="button" class="close text-reset" data-dismiss="offcanvas" aria-label="Close">
@@ -72,7 +72,7 @@ You can use a link with the `href` attribute, or a button with the `data-target`
     </button>
   </div>
 </div>
-<div class="offcanvas bg-info text-white  offcanvas-bottom" tabindex="-1" id="offcanvasExample3">
+<div class="offcanvas bg-info text-white offcanvas-bottom" tabindex="-1" id="offcanvasExample3">
   <div class="offcanvas-header">
     <div class="h4 col text-center">Offcanvas Bottom</div>
     <button type="button" class="close text-reset" data-dismiss="offcanvas" aria-label="Close">
@@ -84,7 +84,7 @@ You can use a link with the `href` attribute, or a button with the `data-target`
 
 ## Color schemes
 
-Theming the offcanvas has never been easier thanks to the combination of theming classes and background-color utilities. You can achieve any customization   with `.bg-{color}` & `.text-{color}` utilities.
+Theming offcanvas is very easy by using our [color utilities]({{< docsref "/utilities/colors" >}}).
 
 ## Body Options
 

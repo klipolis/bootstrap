@@ -1218,18 +1218,18 @@ $close-text-shadow:                 0 1px 0 $white !default;
 
 //Offcanvas
 
-$offcanvas-padding-y:              $spacer !default;
-$offcanvas-padding-x:              $spacer * 2 !default;
+$offcanvas-padding-y:               $spacer !default;
+$offcanvas-padding-x:               $spacer * 2 !default;
 
 $offcanvas-horizontal-width:        390px !default;
 $offcanvas-horizontal-width-mobile: 100% !default;
 $offcanvas-vertical-max-height:     200px !default;
-$offcanvas-vertical-max-height-mobile:  50% !default;
+$offcanvas-vertical-max-height-mobile: 50% !default;
 $offcanvas-mobile-breakpoint:       md !default;
 $offcanvas-transition-duration:     .3s !default;
 $offcanvas-shadow:                  0 0 1rem rgba(0, 0, 0, .6) !important !default;
 $offcanvas-bg-color:                $white !default;
-$offcanvas-color:                $black !default;
+$offcanvas-color:                   $black !default;
 
 $offcanvas-body-blur-color:         rgba(252, 255, 255, .4) !default;
 
