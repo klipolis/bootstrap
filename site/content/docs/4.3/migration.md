@@ -60,6 +60,7 @@ Changes to any layout tools and our grid system.
 - The gutter width is now set in `rem` and slightly increased from `30px` to `2rem` (32px).
 - Better nesting support. A `.row` class can now be used as a direct child of another `.row`.
 - The bullet points and padding from `<ul class="row">`s are removed by default, so no need to add `.list-unstyled` anymore.
+- `bootstrap-grid.css` now only applies `box-sizing: border-box` to the column instead of resetting the global box-sizing. This way the grid system can be used, even if `box-sizing: border-box` in not applied to each element.
 
 ## Content, Reboot, etc
 
