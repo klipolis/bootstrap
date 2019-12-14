@@ -63,6 +63,7 @@ Changes to any layout tools and our grid system.
 Changes to Reboot, typography, tables, and more.
 
 - [RFS]({{< docsref "/getting-started/rfs" >}}) enabled for automated font size rescaling. [See #29152](https://github.com/twbs/bootstrap/pull/29152)
+- Dropped `.small` in favor of `.text-sm`
 - Reset default horizontal `padding-left` on `<ul>` and `<ol>` elements from browser default `40px` to `2rem`.
 - Simplified table styles (no more 2px border on `thead > th` elements) and tightened cell padding.
 - Dropped `.pre-scrollable` class. [See #29135](https://github.com/twbs/bootstrap/pull/29135)
@@ -137,6 +138,7 @@ Badges were overhauled to better differentiate themselves from buttons and to be
 
 - Renamed `.text-monospace` to `.font-monospace`
 - Decreased the number of responsive order utilities per breakpoint. The highest order utility with a number now is `.order-5` instead of `.order-12`. [See #28874](https://github.com/twbs/bootstrap/pull/28874).
+- [RFS](https://github.com/twbs/rfs) enabled for automated rescaling of spacing utilities. [See #29152](https://github.com/twbs/bootstrap/pull/29152)
 - New `line-height` utilities: `.lh-1`, `.lh-sm`, `.lh-base` and `.lh-lg`. See [here]({{< docsref "/utilities/text#line-height" >}}).
 - Added `.bg-body` for quickly setting the `<body>`'s background to additional elements.
 - **Todo:** Drop `.text-hide` as it's an antiquated method for hiding text that shouldn't be used anymore
