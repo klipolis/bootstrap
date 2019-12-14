@@ -42,6 +42,9 @@ Changes to our source Sass files and compiled CSS.
 
 - The `button-variant()` mixin now accepts 3 optional color parameters, for each button state, to override the color provided by `color-yiq()`. By default, these parameters will find which color provides more contrast against the button state's background color with `color-yiq()`.
 - The `button-outline-variant()` mixin now accepts an additional argument, `$active-color`, for setting the button's active state text color. By default, this parameter will find which color provides more contrast against the button's active background color with `color-yiq()`.
+- Breakpoint media queries changes [See #29148](https://github.com/twbs/bootstrap/pull/29148)
+  - The `media-breakpoint-down()` mixin now uses the breakpoint itself instead of the next breakpoint. Use `media-breakpoint-down(lg)` instead of `media-breakpoint-down(md)` to target viewports smaller than the `lg` breakpoint.
+  - The `media-breakpoint-between()` mixin's second parameter also uses the breakpoint itself instead of the next breakpoint. Use `media-breakpoint-between(sm, lg)` instead of `media-breakpoint-between(sm, md)` to target viewports smaller between the `sm` and `lg` breakpoints.
 
 ## JavaScript
 
