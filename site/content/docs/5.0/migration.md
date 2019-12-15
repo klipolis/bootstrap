@@ -58,8 +58,15 @@ Changes to our source and compiled JavaScript files.
 Changes to any layout tools and our grid system.
 
 - Dropped `.media` component as it can be built with utility classes. [See #28265](https://github.com/twbs/bootstrap/pull/28265).
-- **Todo:** Remove `position: relative` from grid columns
-- **Todo:** Integrate CSS grid into our grid system
+- Remove `position: relative` from grid columns.
+- The horizontal padding is added to the direct children in a row instead of the columns themselves.
+  - This simplifies our codebase.
+  - The column classes can now be used stand alone. Whenever they are used outside a `.row`, horizontal padding won't be added.
+- Responsive gutter classes can be used to control the gutter width in as well horizontal, vertical or both directions.
+- The gutter width is now set in `rem` and slightly increased from `30px` to `2rem` (32px).
+- Better nesting support. A `.row` class can now be used as a direct child of another `.row`.
+- The bullet points and padding from `<ul class="row">`s are removed by default, so no need to add `.list-unstyled` anymore.
+- `bootstrap-grid.css` now only applies `box-sizing: border-box` to the column instead of resetting the global box-sizing. This way the grid system can be used, even if `box-sizing: border-box` in not applied to each element.
 
 ## Content, Reboot, etc
 
@@ -68,6 +75,7 @@ Changes to Reboot, typography, tables, and more.
 - [RFS]({{< docsref "/getting-started/rfs" >}}) enabled for automated font size rescaling. [See #29152](https://github.com/twbs/bootstrap/pull/29152)
 - Dropped `.small` in favor of `.text-sm`
 - Reset default horizontal `padding-left` on `<ul>` and `<ol>` elements from browser default `40px` to `2rem`.
+- `.list-inline` is removed in favor of using the grid (`.row`) in combination with `.col-auto` list items. See [inline lists documentation]({{< docsref "/content/typography#inline-lists" >}}).
 - Simplified table styles (no more 2px border on `thead > th` elements) and tightened cell padding.
 - Dropped `.pre-scrollable` class. [See #29135](https://github.com/twbs/bootstrap/pull/29135)
 - `.text-*` utilities do not add hover and focus states to links anymore. `.link-*` helper classes can be used instead. [See #29267](https://github.com/twbs/bootstrap/pull/29267)
@@ -93,6 +101,8 @@ Changes to Reboot, typography, tables, and more.
   - Added support for `:focus` and `:disabled` styles.
 - Renamed `.custom-range` to `.form-range` (including variables).
 - Dropped `.form-group` for margin utilities (we've replaced our docs examples with `.mb-3`).
+- Dropped `.form-row` for the more flexible grid gutters.
+- Dropped `.form-inline` for the more flexible grid.
 - Dropped support for `.form-control-plaintext` inside `.input-group`s.
 
 ## Components
@@ -116,6 +126,7 @@ Badges were overhauled to better differentiate themselves from buttons and to be
 ### Cards
 
 - Removed the card columns in favor of a Masonry grid [See #28922](https://github.com/twbs/bootstrap/pull/28922).
+- Removed card decks in favor of the grid which adds more flexibility over responsive behaviour.
 
 ### Jumbotron
 
