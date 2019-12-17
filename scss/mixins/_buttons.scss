@@ -92,14 +92,8 @@
     box-shadow: 0 0 0 $btn-focus-width rgba($color, .5);
   }
 
-  &.disabled,
-  &:disabled {
-    color: $color;
-    background-color: transparent;
-  }
-
-  &:not(:disabled):not(.disabled):active,
-  &:not(:disabled):not(.disabled).active,
+  &:active,
+  &.active,
   .show > &.dropdown-toggle {
     color: $active-color;
     background-color: $active-background;
@@ -113,6 +107,12 @@
         box-shadow: 0 0 0 $btn-focus-width rgba($color, .5);
       }
     }
+  }
+
+  &.disabled,
+  &:disabled {
+    color: $color;
+    background-color: transparent;
   }
 }
 

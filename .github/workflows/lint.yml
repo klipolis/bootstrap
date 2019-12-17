@@ -1,0 +1,36 @@
+name: Lint
+on: [push, pull_request]
+env:
+  CI: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+
+      - name: Set Node.js version
+        uses: actions/setup-node@v1
+        with:
+          node-version: "10"
+
+      - run: node --version
+      - run: npm --version
+
+      - name: Set up npm cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-v{{ matrix.node }}-${{ hashFiles('package.json') }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('.github/workflows/lint.yml') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-v{{ matrix.node }}-${{ env.cache-name }}-
+            ${{ runner.OS }}-node-v{{ matrix.node }}-
+            ${{ runner.OS }}-
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Lint CSS and JS
+        run: npm run lint

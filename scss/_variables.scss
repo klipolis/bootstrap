@@ -17,22 +17,17 @@ $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 $black:    #000 !default;
 
-$grays: () !default;
-// stylelint-disable-next-line scss/dollar-variable-default
-$grays: map-merge(
-  (
-    "100": $gray-100,
-    "200": $gray-200,
-    "300": $gray-300,
-    "400": $gray-400,
-    "500": $gray-500,
-    "600": $gray-600,
-    "700": $gray-700,
-    "800": $gray-800,
-    "900": $gray-900
-  ),
-  $grays
-);
+$grays: (
+  "100": $gray-100,
+  "200": $gray-200,
+  "300": $gray-300,
+  "400": $gray-400,
+  "500": $gray-500,
+  "600": $gray-600,
+  "700": $gray-700,
+  "800": $gray-800,
+  "900": $gray-900
+) !default;
 
 $blue:    #0d6efd !default;
 $indigo:  #6610f2 !default;
@@ -45,26 +40,21 @@ $green:   #28a745 !default;
 $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
 
-$colors: () !default;
-// stylelint-disable-next-line scss/dollar-variable-default
-$colors: map-merge(
-  (
-    "blue":       $blue,
-    "indigo":     $indigo,
-    "purple":     $purple,
-    "pink":       $pink,
-    "red":        $red,
-    "orange":     $orange,
-    "yellow":     $yellow,
-    "green":      $green,
-    "teal":       $teal,
-    "cyan":       $cyan,
-    "white":      $white,
-    "gray":       $gray-600,
-    "gray-dark":  $gray-800
-  ),
-  $colors
-);
+$colors: (
+  "blue":       $blue,
+  "indigo":     $indigo,
+  "purple":     $purple,
+  "pink":       $pink,
+  "red":        $red,
+  "orange":     $orange,
+  "yellow":     $yellow,
+  "green":      $green,
+  "teal":       $teal,
+  "cyan":       $cyan,
+  "white":      $white,
+  "gray":       $gray-600,
+  "gray-dark":  $gray-800
+) !default;
 
 $primary:       $blue !default;
 $secondary:     $gray-600 !default;
@@ -75,21 +65,16 @@ $danger:        $red !default;
 $light:         $gray-100 !default;
 $dark:          $gray-800 !default;
 
-$theme-colors: () !default;
-// stylelint-disable-next-line scss/dollar-variable-default
-$theme-colors: map-merge(
-  (
-    "primary":    $primary,
-    "secondary":  $secondary,
-    "success":    $success,
-    "info":       $info,
-    "warning":    $warning,
-    "danger":     $danger,
-    "light":      $light,
-    "dark":       $dark
-  ),
-  $theme-colors
-);
+$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark
+) !default;
 
 // Set a specific jump point for requesting color jumps
 $theme-color-interval:      8% !default;
@@ -223,6 +208,7 @@ $enable-prefers-reduced-motion-media-query:   true !default;
 $enable-grid-classes:                         true !default;
 $enable-pointer-cursor-for-buttons:           true !default;
 $enable-rfs:                                  true !default;
+$enable-rfs-for-spacing-utilities:            true !default;
 $enable-validation-icons:                     true !default;
 $enable-deprecation-messages:                 true !default;
 
@@ -234,19 +220,14 @@ $enable-deprecation-messages:                 true !default;
 // You can add more entries to the $spacers map, should you need more variation.
 
 $spacer: 1rem !default;
-$spacers: () !default;
-// stylelint-disable-next-line scss/dollar-variable-default
-$spacers: map-merge(
-  (
-    0: 0,
-    1: $spacer * .25,
-    2: $spacer * .5,
-    3: $spacer,
-    4: $spacer * 1.5,
-    5: $spacer * 3,
-  ),
-  $spacers
-);
+$spacers: (
+  0: 0,
+  1: $spacer * .25,
+  2: $spacer * .5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+) !default;
 
 $negative-spacers: negativify-map($spacers) !default;
 
@@ -316,9 +297,22 @@ $container-max-widths: (
 // Set the number of columns and specify the width of the gutters.
 
 $grid-columns:                12 !default;
-$grid-gutter-width:           30px !default;
+$grid-gutter-width:           2rem !default;
 $grid-row-columns:            6 !default;
 
+$gutters: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$gutters: map-merge(
+  (
+    0: 0,
+    1: $grid-gutter-width * .25,
+    2: $grid-gutter-width * .5,
+    3: $grid-gutter-width,
+    4: $grid-gutter-width * 1.5,
+    5: $grid-gutter-width * 3,
+  ),
+  $gutters
+);
 
 // Container padding
 
@@ -354,28 +348,23 @@ $transition-base:             all .2s ease-in-out !default;
 $transition-fade:             opacity .15s linear !default;
 $transition-collapse:         height .35s ease !default;
 
-$embed-responsive-aspect-ratios: () !default;
-// stylelint-disable-next-line scss/dollar-variable-default
-$embed-responsive-aspect-ratios: map-merge(
-  (
-    "21by9": (
-      x: 21,
-      y: 9
-    ),
-    "16by9": (
-      x: 16,
-      y: 9
-    ),
-    "4by3": (
-      x: 4,
-      y: 3
-    ),
-    "1by1": (
-      x: 1,
-      y: 1
-    )
+$embed-responsive-aspect-ratios: (
+  "21by9": (
+    x: 21,
+    y: 9
   ),
-  $embed-responsive-aspect-ratios
+  "16by9": (
+    x: 16,
+    y: 9
+  ),
+  "4by3": (
+    x: 4,
+    y: 3
+  ),
+  "1by1": (
+    x: 1,
+    y: 1
+  )
 );
 
 // Typography
@@ -392,8 +381,9 @@ $font-family-base:            $font-family-sans-serif !default;
 // $font-size-base effects the font size of the body text
 $font-size-root:              null !default;
 $font-size-base:              1rem !default; // Assumes the browser default, typically `16px`
-$font-size-lg:                $font-size-base * 1.25 !default;
 $font-size-sm:                $font-size-base * .875 !default;
+$font-size-lg:                $font-size-base * 1.25 !default;
+$font-size-xl:                $font-size-base * 1.5 !default;
 
 $font-weight-lighter:         lighter !default;
 $font-weight-light:           300 !default;
@@ -460,8 +450,6 @@ $mark-padding:                .2em !default;
 $dt-font-weight:              $font-weight-bold !default;
 
 $nested-kbd-font-weight:      $font-weight-bold !default;
-
-$list-inline-padding:         .5rem !default;
 
 $mark-bg:                     #fcf8e3 !default;
 
@@ -679,10 +667,6 @@ $form-text-margin-top:                  .25rem !default;
 
 $form-check-inline-margin-right:        1rem !default;
 
-$form-check-input-margin-x:             .25rem !default;
-
-$form-grid-gutter-width:                10px !default;
-
 $input-group-addon-color:               $input-color !default;
 $input-group-addon-bg:                  $gray-200 !default;
 $input-group-addon-border-color:        $input-border-color !default;
@@ -782,21 +766,16 @@ $form-feedback-icon-valid:          url("data:image/svg+xml,<svg xmlns='http://w
 $form-feedback-icon-invalid-color:  $form-feedback-invalid-color !default;
 $form-feedback-icon-invalid:        url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='#{$form-feedback-icon-invalid-color}' viewBox='0 0 12 12'><circle cx='6' cy='6' r='4.5'/><path stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/><circle cx='6' cy='8.2' r='.6' fill='#{$form-feedback-icon-invalid-color}' stroke='none'/></svg>") !default;
 
-$form-validation-states: () !default;
-// stylelint-disable-next-line scss/dollar-variable-default
-$form-validation-states: map-merge(
-  (
-    "valid": (
-      "color": $form-feedback-valid-color,
-      "icon": $form-feedback-icon-valid
-    ),
-    "invalid": (
-      "color": $form-feedback-invalid-color,
-      "icon": $form-feedback-icon-invalid
-    ),
+$form-validation-states: (
+  "valid": (
+    "color": $form-feedback-valid-color,
+    "icon": $form-feedback-icon-valid
   ),
-  $form-validation-states
-);
+  "invalid": (
+    "color": $form-feedback-invalid-color,
+    "icon": $form-feedback-icon-invalid
+  )
+) !default;
 
 // Z-index master list
 //
@@ -952,7 +931,6 @@ $card-bg:                           $white !default;
 $card-img-overlay-padding:          1.25rem !default;
 
 $card-group-margin:                 $grid-gutter-width / 2 !default;
-$card-deck-margin:                  $card-group-margin !default;
 
 
 // Tooltips
