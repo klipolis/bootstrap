@@ -3433,6 +3433,260 @@
   }
 
   /**
+   * ------------------------------------------------------------------------
+   * Constants
+   * ------------------------------------------------------------------------
+   */
+
+  var NAME$6 = 'offcanvas';
+  var VERSION$6 = '4.3.1';
+  var DATA_KEY$6 = 'bs.offcanvas';
+  var EVENT_KEY$6 = "." + DATA_KEY$6;
+  var DATA_API_KEY$6 = '.data-api';
+  var ESCAPE_KEYCODE$2 = 27; // ESC
+
+  var DATA_BODY_ACTIONS = 'data-body';
+  var Selector$6 = {
+    DATA_DISMISS: '[data-dismiss="offcanvas"]',
+    DATA_TOGGLE: '[data-toggle="offcanvas"]'
+  };
+  var Event$7 = {
+    SHOW: "show" + EVENT_KEY$6,
+    SHOWN: "shown" + EVENT_KEY$6,
+    HIDE: "hide" + EVENT_KEY$6,
+    HIDDEN: "hidden" + EVENT_KEY$6,
+    CLICK_DATA_API: "click" + EVENT_KEY$6 + DATA_API_KEY$6,
+    CLICK_DISMISS: "click.dismiss" + EVENT_KEY$6
+  };
+  var ClassName$6 = {
+    BLUR_BODY: 'offcanvas-blur',
+    DISABLED: 'disabled',
+    OPEN: 'offcanvas-open',
+    TOGGLING: 'offcanvas-toggling',
+    SHOW: 'show',
+    STOP_OVERFLOW: 'offcanvas-freeze'
+  };
+  /**
+   * ------------------------------------------------------------------------
+   * Class Definition
+   * ------------------------------------------------------------------------
+   */
+
+  var OffCanvas =
+  /*#__PURE__*/
+  function () {
+    function OffCanvas(element) {
+      this._element = element;
+      this._isShown = element.classList.contains(ClassName$6.SHOW);
+      this._bodyOptions = element.getAttribute(DATA_BODY_ACTIONS);
+
+      this._handleClosing();
+
+      Data.setData(element, DATA_KEY$6, this);
+    } // Getters
+
+
+    var _proto = OffCanvas.prototype;
+
+    // Public
+    _proto.toggle = function toggle(relatedTarget) {
+      return this._isShown ? this.hide(relatedTarget) : this.show(relatedTarget);
+    };
+
+    _proto.show = function show(relatedTarget) {
+      var _this = this;
+
+      if (this._isShown) {
+        return;
+      }
+
+      var showEvent = EventHandler.trigger(this._element, Event$7.SHOW, {
+        relatedTarget: relatedTarget
+      });
+
+      if (showEvent.defaultPrevented) {
+        return;
+      }
+
+      this._isShown = true;
+      document.body.classList.add(ClassName$6.TOGGLING);
+
+      if (this._bodyOptions === 'blur') {
+        document.body.classList.add(ClassName$6.BLUR_BODY);
+      }
+
+      if (this._bodyOptions !== 'scroll') {
+        document.body.classList.add(ClassName$6.STOP_OVERFLOW);
+      }
+
+      this._element.removeAttribute('aria-hidden');
+
+      this._element.classList.add(ClassName$6.SHOW);
+
+      setTimeout(function () {
+        _this._element.setAttribute('aria-expanded', true);
+
+        _this._element.setAttribute('aria-offcanvas', true);
+
+        document.body.classList.add(ClassName$6.OPEN);
+        document.body.classList.remove(ClassName$6.TOGGLING);
+
+        _this._enforceFocus();
+
+        EventHandler.trigger(_this._element, Event$7.SHOWN, {
+          relatedTarget: relatedTarget
+        });
+      }, getTransitionDurationFromElement(this._element));
+    };
+
+    _proto.hide = function hide(relatedTarget) {
+      var _this2 = this;
+
+      if (!this._isShown) {
+        return;
+      }
+
+      var hideEvent = EventHandler.trigger(this._element, Event$7.HIDE, {
+        relatedTarget: relatedTarget
+      });
+
+      if (hideEvent.defaultPrevented) {
+        return;
+      }
+
+      this._isShown = false;
+
+      if (!document.body.classList.contains(ClassName$6.TOGGLING)) {
+        document.body.classList.remove(ClassName$6.OPEN);
+      }
+
+      if (this._bodyOptions === 'blur') {
+        document.body.classList.remove(ClassName$6.BLUR_BODY);
+      }
+
+      if (this._bodyOptions !== 'scroll') {
+        document.body.classList.remove(ClassName$6.STOP_OVERFLOW);
+      }
+
+      document.body.classList.add(ClassName$6.TOGGLING);
+
+      this._element.classList.remove(ClassName$6.SHOW);
+
+      this._element.blur();
+
+      setTimeout(function () {
+        document.body.classList.remove(ClassName$6.TOGGLING);
+
+        _this2._element.setAttribute('aria-hidden', true);
+
+        _this2._element.setAttribute('aria-expanded', false);
+
+        _this2._element.removeAttribute('aria-offcanvas');
+
+        EventHandler.trigger(_this2._element, Event$7.HIDDEN, {
+          relatedTarget: relatedTarget
+        });
+      }, getTransitionDurationFromElement(this._element));
+    } // Private
+    ;
+
+    _proto._enforceFocus = function _enforceFocus() {
+      this._element.setAttribute('tabindex', '0');
+
+      this._element.focus();
+
+      this._element.setAttribute('tabindex', 1);
+    };
+
+    _proto._handleClosing = function _handleClosing() {
+      var _this3 = this;
+
+      EventHandler.on(this._element, Event$7.CLICK_DISMISS, Selector$6.DATA_DISMISS, function (event) {
+        return _this3.hide(event);
+      });
+      EventHandler.on(document, 'keydown', function (event) {
+        if (event.which === ESCAPE_KEYCODE$2) {
+          _this3.hide(event.target);
+        }
+      });
+      EventHandler.on(document, Event$7.CLICK_DATA_API, function (event) {
+        var target = SelectorEngine.findOne(getSelectorFromElement(event.target));
+
+        if (!_this3._element.contains(event.target) && target !== _this3._element) {
+          _this3.hide(event.target);
+        }
+      });
+    } // Static
+    ;
+
+    OffCanvas.jQueryInterface = function jQueryInterface(config) {
+      return this.each(function () {
+        var data = Data.getData(this, DATA_KEY$6) || new OffCanvas(this);
+
+        if (typeof config === 'string') {
+          if (typeof data[config] === 'undefined') {
+            throw new TypeError("No method named \"" + config + "\"");
+          }
+
+          data[config](this);
+        }
+      });
+    };
+
+    OffCanvas.getInstance = function getInstance(element) {
+      return Data.getData(element, DATA_KEY$6);
+    };
+
+    _createClass(OffCanvas, null, [{
+      key: "VERSION",
+      get: function get() {
+        return VERSION$6;
+      }
+    }]);
+
+    return OffCanvas;
+  }();
+  /**
+   * ------------------------------------------------------------------------
+   * Data Api implementation
+   * ------------------------------------------------------------------------
+   */
+
+
+  EventHandler.on(document, Event$7.CLICK_DATA_API, Selector$6.DATA_TOGGLE, function (event) {
+    if (['A', 'AREA'].indexOf(this.tagName) > -1) {
+      event.preventDefault();
+    }
+
+    if (this.disabled || this.classList.contains(ClassName$6.DISABLED)) {
+      return;
+    }
+
+    var target = SelectorEngine.findOne(getSelectorFromElement(this));
+    var data = Data.getData(target, DATA_KEY$6) || new OffCanvas(target);
+    data.toggle(this);
+  });
+  var $$7 = getjQuery();
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+
+  /* istanbul ignore if */
+
+  if ($$7) {
+    var JQUERY_NO_CONFLICT$6 = $$7.fn[NAME$6];
+    $$7.fn[NAME$6] = OffCanvas.jQueryInterface;
+    $$7.fn[NAME$6].Constructor = OffCanvas;
+
+    $$7.fn[NAME$6].noConflict = function () {
+      $$7.fn[NAME$6] = JQUERY_NO_CONFLICT$6;
+      return OffCanvas.jQueryInterface;
+    };
+  }
+
+  /**
    * --------------------------------------------------------------------------
    * Bootstrap (v5.0.0): util/sanitizer.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
@@ -3559,10 +3813,10 @@
    * ------------------------------------------------------------------------
    */
 
-  var NAME$6 = 'tooltip';
-  var VERSION$6 = '5.0.0';
-  var DATA_KEY$6 = 'bs.tooltip';
-  var EVENT_KEY$6 = "." + DATA_KEY$6;
+  var NAME$7 = 'tooltip';
+  var VERSION$7 = '5.0.0';
+  var DATA_KEY$7 = 'bs.tooltip';
+  var EVENT_KEY$7 = "." + DATA_KEY$7;
   var CLASS_PREFIX = 'bs-tooltip';
   var BSCLS_PREFIX_REGEX = new RegExp("(^|\\s)" + CLASS_PREFIX + "\\S+", 'g');
   var DISALLOWED_ATTRIBUTES = ['sanitize', 'whiteList', 'sanitizeFn'];
@@ -3613,23 +3867,23 @@
     SHOW: 'show',
     OUT: 'out'
   };
-  var Event$7 = {
-    HIDE: "hide" + EVENT_KEY$6,
-    HIDDEN: "hidden" + EVENT_KEY$6,
-    SHOW: "show" + EVENT_KEY$6,
-    SHOWN: "shown" + EVENT_KEY$6,
-    INSERTED: "inserted" + EVENT_KEY$6,
-    CLICK: "click" + EVENT_KEY$6,
-    FOCUSIN: "focusin" + EVENT_KEY$6,
-    FOCUSOUT: "focusout" + EVENT_KEY$6,
-    MOUSEENTER: "mouseenter" + EVENT_KEY$6,
-    MOUSELEAVE: "mouseleave" + EVENT_KEY$6
+  var Event$8 = {
+    HIDE: "hide" + EVENT_KEY$7,
+    HIDDEN: "hidden" + EVENT_KEY$7,
+    SHOW: "show" + EVENT_KEY$7,
+    SHOWN: "shown" + EVENT_KEY$7,
+    INSERTED: "inserted" + EVENT_KEY$7,
+    CLICK: "click" + EVENT_KEY$7,
+    FOCUSIN: "focusin" + EVENT_KEY$7,
+    FOCUSOUT: "focusout" + EVENT_KEY$7,
+    MOUSEENTER: "mouseenter" + EVENT_KEY$7,
+    MOUSELEAVE: "mouseleave" + EVENT_KEY$7
   };
-  var ClassName$6 = {
+  var ClassName$7 = {
     FADE: 'fade',
     SHOW: 'show'
   };
-  var Selector$6 = {
+  var Selector$7 = {
     TOOLTIP_INNER: '.tooltip-inner'
   };
   var Trigger = {
@@ -3706,7 +3960,7 @@
           context._leave(null, context);
         }
       } else {
-        if (this.getTipElement().classList.contains(ClassName$6.SHOW)) {
+        if (this.getTipElement().classList.contains(ClassName$7.SHOW)) {
           this._leave(null, this);
 
           return;
@@ -3764,7 +4018,7 @@
         this.setContent();
 
         if (this.config.animation) {
-          tip.classList.add(ClassName$6.FADE);
+          tip.classList.add(ClassName$7.FADE);
         }
 
         var placement = typeof this.config.placement === 'function' ? this.config.placement.call(this, tip, this.element) : this.config.placement;
@@ -3783,7 +4037,7 @@
 
         EventHandler.trigger(this.element, this.constructor.Event.INSERTED);
         this._popper = new Popper(this.element, tip, this._getPopperConfig(attachment));
-        tip.classList.add(ClassName$6.SHOW); // If this is a touch-enabled device we add extra
+        tip.classList.add(ClassName$7.SHOW); // If this is a touch-enabled device we add extra
         // empty mouseover listeners to the body's immediate children;
         // only needed because of broken event delegation on iOS
         // https://www.quirksmode.org/blog/archives/2014/02/mouse_event_bub.html
@@ -3808,7 +4062,7 @@
           }
         };
 
-        if (this.tip.classList.contains(ClassName$6.FADE)) {
+        if (this.tip.classList.contains(ClassName$7.FADE)) {
           var transitionDuration = getTransitionDurationFromElement(this.tip);
           EventHandler.one(this.tip, TRANSITION_END, complete);
           emulateTransitionEnd(this.tip, transitionDuration);
@@ -3843,7 +4097,7 @@
         return;
       }
 
-      tip.classList.remove(ClassName$6.SHOW); // If this is a touch-enabled device we remove the extra
+      tip.classList.remove(ClassName$7.SHOW); // If this is a touch-enabled device we remove the extra
       // empty mouseover listeners we added for iOS support
 
       if ('ontouchstart' in document.documentElement) {
@@ -3856,7 +4110,7 @@
       this._activeTrigger[Trigger.FOCUS] = false;
       this._activeTrigger[Trigger.HOVER] = false;
 
-      if (this.tip.classList.contains(ClassName$6.FADE)) {
+      if (this.tip.classList.contains(ClassName$7.FADE)) {
         var transitionDuration = getTransitionDurationFromElement(tip);
         EventHandler.one(tip, TRANSITION_END, complete);
         emulateTransitionEnd(tip, transitionDuration);
@@ -3891,9 +4145,9 @@
 
     _proto.setContent = function setContent() {
       var tip = this.getTipElement();
-      this.setElementContent(SelectorEngine.findOne(Selector$6.TOOLTIP_INNER, tip), this.getTitle());
-      tip.classList.remove(ClassName$6.FADE);
-      tip.classList.remove(ClassName$6.SHOW);
+      this.setElementContent(SelectorEngine.findOne(Selector$7.TOOLTIP_INNER, tip), this.getTitle());
+      tip.classList.remove(ClassName$7.FADE);
+      tip.classList.remove(ClassName$7.SHOW);
     };
 
     _proto.setElementContent = function setElementContent(element, content) {
@@ -4068,7 +4322,7 @@
         context._activeTrigger[event.type === 'focusin' ? Trigger.FOCUS : Trigger.HOVER] = true;
       }
 
-      if (context.getTipElement().classList.contains(ClassName$6.SHOW) || context._hoverState === HoverState.SHOW) {
+      if (context.getTipElement().classList.contains(ClassName$7.SHOW) || context._hoverState === HoverState.SHOW) {
         context._hoverState = HoverState.SHOW;
         return;
       }
@@ -4159,7 +4413,7 @@
         config.content = config.content.toString();
       }
 
-      typeCheckConfig(NAME$6, config, this.constructor.DefaultType);
+      typeCheckConfig(NAME$7, config, this.constructor.DefaultType);
 
       if (config.sanitize) {
         config.template = sanitizeHtml(config.template, config.whiteList, config.sanitizeFn);
@@ -4212,7 +4466,7 @@
         return;
       }
 
-      tip.classList.remove(ClassName$6.FADE);
+      tip.classList.remove(ClassName$7.FADE);
       this.config.animation = false;
       this.hide();
       this.show();
@@ -4222,7 +4476,7 @@
 
     Tooltip.jQueryInterface = function jQueryInterface(config) {
       return this.each(function () {
-        var data = Data.getData(this, DATA_KEY$6);
+        var data = Data.getData(this, DATA_KEY$7);
 
         var _config = typeof config === 'object' && config;
 
@@ -4245,13 +4499,13 @@
     };
 
     Tooltip.getInstance = function getInstance(element) {
-      return Data.getData(element, DATA_KEY$6);
+      return Data.getData(element, DATA_KEY$7);
     };
 
     _createClass(Tooltip, null, [{
       key: "VERSION",
       get: function get() {
-        return VERSION$6;
+        return VERSION$7;
       }
     }, {
       key: "Default",
@@ -4261,22 +4515,22 @@
     }, {
       key: "NAME",
       get: function get() {
-        return NAME$6;
+        return NAME$7;
       }
     }, {
       key: "DATA_KEY",
       get: function get() {
-        return DATA_KEY$6;
+        return DATA_KEY$7;
       }
     }, {
       key: "Event",
       get: function get() {
-        return Event$7;
+        return Event$8;
       }
     }, {
       key: "EVENT_KEY",
       get: function get() {
-        return EVENT_KEY$6;
+        return EVENT_KEY$7;
       }
     }, {
       key: "DefaultType",
@@ -4288,7 +4542,7 @@
     return Tooltip;
   }();
 
-  var $$7 = getjQuery();
+  var $$8 = getjQuery();
   /**
    * ------------------------------------------------------------------------
    * jQuery
@@ -4298,13 +4552,13 @@
 
   /* istanbul ignore if */
 
-  if ($$7) {
-    var JQUERY_NO_CONFLICT$6 = $$7.fn[NAME$6];
-    $$7.fn[NAME$6] = Tooltip.jQueryInterface;
-    $$7.fn[NAME$6].Constructor = Tooltip;
+  if ($$8) {
+    var JQUERY_NO_CONFLICT$7 = $$8.fn[NAME$7];
+    $$8.fn[NAME$7] = Tooltip.jQueryInterface;
+    $$8.fn[NAME$7].Constructor = Tooltip;
 
-    $$7.fn[NAME$6].noConflict = function () {
-      $$7.fn[NAME$6] = JQUERY_NO_CONFLICT$6;
+    $$8.fn[NAME$7].noConflict = function () {
+      $$8.fn[NAME$7] = JQUERY_NO_CONFLICT$7;
       return Tooltip.jQueryInterface;
     };
   }
@@ -4315,10 +4569,10 @@
    * ------------------------------------------------------------------------
    */
 
-  var NAME$7 = 'popover';
-  var VERSION$7 = '5.0.0';
-  var DATA_KEY$7 = 'bs.popover';
-  var EVENT_KEY$7 = "." + DATA_KEY$7;
+  var NAME$8 = 'popover';
+  var VERSION$8 = '5.0.0';
+  var DATA_KEY$8 = 'bs.popover';
+  var EVENT_KEY$8 = "." + DATA_KEY$8;
   var CLASS_PREFIX$1 = 'bs-popover';
   var BSCLS_PREFIX_REGEX$1 = new RegExp("(^|\\s)" + CLASS_PREFIX$1 + "\\S+", 'g');
 
@@ -4333,25 +4587,25 @@
     content: '(string|element|function)'
   });
 
-  var ClassName$7 = {
+  var ClassName$8 = {
     FADE: 'fade',
     SHOW: 'show'
   };
-  var Selector$7 = {
+  var Selector$8 = {
     TITLE: '.popover-header',
     CONTENT: '.popover-body'
   };
-  var Event$8 = {
-    HIDE: "hide" + EVENT_KEY$7,
-    HIDDEN: "hidden" + EVENT_KEY$7,
-    SHOW: "show" + EVENT_KEY$7,
-    SHOWN: "shown" + EVENT_KEY$7,
-    INSERTED: "inserted" + EVENT_KEY$7,
-    CLICK: "click" + EVENT_KEY$7,
-    FOCUSIN: "focusin" + EVENT_KEY$7,
-    FOCUSOUT: "focusout" + EVENT_KEY$7,
-    MOUSEENTER: "mouseenter" + EVENT_KEY$7,
-    MOUSELEAVE: "mouseleave" + EVENT_KEY$7
+  var Event$9 = {
+    HIDE: "hide" + EVENT_KEY$8,
+    HIDDEN: "hidden" + EVENT_KEY$8,
+    SHOW: "show" + EVENT_KEY$8,
+    SHOWN: "shown" + EVENT_KEY$8,
+    INSERTED: "inserted" + EVENT_KEY$8,
+    CLICK: "click" + EVENT_KEY$8,
+    FOCUSIN: "focusin" + EVENT_KEY$8,
+    FOCUSOUT: "focusout" + EVENT_KEY$8,
+    MOUSEENTER: "mouseenter" + EVENT_KEY$8,
+    MOUSELEAVE: "mouseleave" + EVENT_KEY$8
   };
   /**
    * ------------------------------------------------------------------------
@@ -4378,7 +4632,7 @@
     _proto.setContent = function setContent() {
       var tip = this.getTipElement(); // we use append for html objects to maintain js events
 
-      this.setElementContent(SelectorEngine.findOne(Selector$7.TITLE, tip), this.getTitle());
+      this.setElementContent(SelectorEngine.findOne(Selector$8.TITLE, tip), this.getTitle());
 
       var content = this._getContent();
 
@@ -4386,9 +4640,9 @@
         content = content.call(this.element);
       }
 
-      this.setElementContent(SelectorEngine.findOne(Selector$7.CONTENT, tip), content);
-      tip.classList.remove(ClassName$7.FADE);
-      tip.classList.remove(ClassName$7.SHOW);
+      this.setElementContent(SelectorEngine.findOne(Selector$8.CONTENT, tip), content);
+      tip.classList.remove(ClassName$8.FADE);
+      tip.classList.remove(ClassName$8.SHOW);
     };
 
     _proto._addAttachmentClass = function _addAttachmentClass(attachment) {
@@ -4416,7 +4670,7 @@
 
     Popover.jQueryInterface = function jQueryInterface(config) {
       return this.each(function () {
-        var data = Data.getData(this, DATA_KEY$7);
+        var data = Data.getData(this, DATA_KEY$8);
 
         var _config = typeof config === 'object' ? config : null;
 
@@ -4426,7 +4680,7 @@
 
         if (!data) {
           data = new Popover(this, _config);
-          Data.setData(this, DATA_KEY$7, data);
+          Data.setData(this, DATA_KEY$8, data);
         }
 
         if (typeof config === 'string') {
@@ -4440,14 +4694,14 @@
     };
 
     Popover.getInstance = function getInstance(element) {
-      return Data.getData(element, DATA_KEY$7);
+      return Data.getData(element, DATA_KEY$8);
     };
 
     _createClass(Popover, null, [{
       key: "VERSION",
       // Getters
       get: function get() {
-        return VERSION$7;
+        return VERSION$8;
       }
     }, {
       key: "Default",
@@ -4457,22 +4711,22 @@
     }, {
       key: "NAME",
       get: function get() {
-        return NAME$7;
+        return NAME$8;
       }
     }, {
       key: "DATA_KEY",
       get: function get() {
-        return DATA_KEY$7;
+        return DATA_KEY$8;
       }
     }, {
       key: "Event",
       get: function get() {
-        return Event$8;
+        return Event$9;
       }
     }, {
       key: "EVENT_KEY",
       get: function get() {
-        return EVENT_KEY$7;
+        return EVENT_KEY$8;
       }
     }, {
       key: "DefaultType",
@@ -4484,7 +4738,7 @@
     return Popover;
   }(Tooltip);
 
-  var $$8 = getjQuery();
+  var $$9 = getjQuery();
   /**
    * ------------------------------------------------------------------------
    * jQuery
@@ -4493,13 +4747,13 @@
 
   /* istanbul ignore if */
 
-  if ($$8) {
-    var JQUERY_NO_CONFLICT$7 = $$8.fn[NAME$7];
-    $$8.fn[NAME$7] = Popover.jQueryInterface;
-    $$8.fn[NAME$7].Constructor = Popover;
+  if ($$9) {
+    var JQUERY_NO_CONFLICT$8 = $$9.fn[NAME$8];
+    $$9.fn[NAME$8] = Popover.jQueryInterface;
+    $$9.fn[NAME$8].Constructor = Popover;
 
-    $$8.fn[NAME$7].noConflict = function () {
-      $$8.fn[NAME$7] = JQUERY_NO_CONFLICT$7;
+    $$9.fn[NAME$8].noConflict = function () {
+      $$9.fn[NAME$8] = JQUERY_NO_CONFLICT$8;
       return Popover.jQueryInterface;
     };
   }
@@ -4510,11 +4764,11 @@
    * ------------------------------------------------------------------------
    */
 
-  var NAME$8 = 'scrollspy';
-  var VERSION$8 = '5.0.0';
-  var DATA_KEY$8 = 'bs.scrollspy';
-  var EVENT_KEY$8 = "." + DATA_KEY$8;
-  var DATA_API_KEY$6 = '.data-api';
+  var NAME$9 = 'scrollspy';
+  var VERSION$9 = '5.0.0';
+  var DATA_KEY$9 = 'bs.scrollspy';
+  var EVENT_KEY$9 = "." + DATA_KEY$9;
+  var DATA_API_KEY$7 = '.data-api';
   var Default$6 = {
     offset: 10,
     method: 'auto',
@@ -4525,16 +4779,16 @@
     method: 'string',
     target: '(string|element)'
   };
-  var Event$9 = {
-    ACTIVATE: "activate" + EVENT_KEY$8,
-    SCROLL: "scroll" + EVENT_KEY$8,
-    LOAD_DATA_API: "load" + EVENT_KEY$8 + DATA_API_KEY$6
+  var Event$a = {
+    ACTIVATE: "activate" + EVENT_KEY$9,
+    SCROLL: "scroll" + EVENT_KEY$9,
+    LOAD_DATA_API: "load" + EVENT_KEY$9 + DATA_API_KEY$7
   };
-  var ClassName$8 = {
+  var ClassName$9 = {
     DROPDOWN_ITEM: 'dropdown-item',
     ACTIVE: 'active'
   };
-  var Selector$8 = {
+  var Selector$9 = {
     DATA_SPY: '[data-spy="scroll"]',
     NAV_LIST_GROUP: '.nav, .list-group',
     NAV_LINKS: '.nav-link',
@@ -4562,19 +4816,19 @@
       this._element = element;
       this._scrollElement = element.tagName === 'BODY' ? window : element;
       this._config = this._getConfig(config);
-      this._selector = this._config.target + " " + Selector$8.NAV_LINKS + "," + (this._config.target + " " + Selector$8.LIST_ITEMS + ",") + (this._config.target + " ." + ClassName$8.DROPDOWN_ITEM);
+      this._selector = this._config.target + " " + Selector$9.NAV_LINKS + "," + (this._config.target + " " + Selector$9.LIST_ITEMS + ",") + (this._config.target + " ." + ClassName$9.DROPDOWN_ITEM);
       this._offsets = [];
       this._targets = [];
       this._activeTarget = null;
       this._scrollHeight = 0;
-      EventHandler.on(this._scrollElement, Event$9.SCROLL, function (event) {
+      EventHandler.on(this._scrollElement, Event$a.SCROLL, function (event) {
         return _this._process(event);
       });
       this.refresh();
 
       this._process();
 
-      Data.setData(element, DATA_KEY$8, this);
+      Data.setData(element, DATA_KEY$9, this);
     } // Getters
 
 
@@ -4620,8 +4874,8 @@
     };
 
     _proto.dispose = function dispose() {
-      Data.removeData(this._element, DATA_KEY$8);
-      EventHandler.off(this._scrollElement, EVENT_KEY$8);
+      Data.removeData(this._element, DATA_KEY$9);
+      EventHandler.off(this._scrollElement, EVENT_KEY$9);
       this._element = null;
       this._scrollElement = null;
       this._config = null;
@@ -4640,14 +4894,14 @@
         var id = config.target.id;
 
         if (!id) {
-          id = getUID(NAME$8);
+          id = getUID(NAME$9);
           config.target.id = id;
         }
 
         config.target = "#" + id;
       }
 
-      typeCheckConfig(NAME$8, config, DefaultType$6);
+      typeCheckConfig(NAME$9, config, DefaultType$6);
       return config;
     };
 
@@ -4714,44 +4968,44 @@
 
       var link = SelectorEngine.findOne(queries.join(','));
 
-      if (link.classList.contains(ClassName$8.DROPDOWN_ITEM)) {
-        SelectorEngine.findOne(Selector$8.DROPDOWN_TOGGLE, SelectorEngine.closest(link, Selector$8.DROPDOWN)).classList.add(ClassName$8.ACTIVE);
-        link.classList.add(ClassName$8.ACTIVE);
+      if (link.classList.contains(ClassName$9.DROPDOWN_ITEM)) {
+        SelectorEngine.findOne(Selector$9.DROPDOWN_TOGGLE, SelectorEngine.closest(link, Selector$9.DROPDOWN)).classList.add(ClassName$9.ACTIVE);
+        link.classList.add(ClassName$9.ACTIVE);
       } else {
         // Set triggered link as active
-        link.classList.add(ClassName$8.ACTIVE);
-        SelectorEngine.parents(link, Selector$8.NAV_LIST_GROUP).forEach(function (listGroup) {
+        link.classList.add(ClassName$9.ACTIVE);
+        SelectorEngine.parents(link, Selector$9.NAV_LIST_GROUP).forEach(function (listGroup) {
           // Set triggered links parents as active
           // With both <ul> and <nav> markup a parent is the previous sibling of any nav ancestor
-          SelectorEngine.prev(listGroup, Selector$8.NAV_LINKS + ", " + Selector$8.LIST_ITEMS).forEach(function (item) {
-            return item.classList.add(ClassName$8.ACTIVE);
+          SelectorEngine.prev(listGroup, Selector$9.NAV_LINKS + ", " + Selector$9.LIST_ITEMS).forEach(function (item) {
+            return item.classList.add(ClassName$9.ACTIVE);
           }); // Handle special case when .nav-link is inside .nav-item
 
-          SelectorEngine.prev(listGroup, Selector$8.NAV_ITEMS).forEach(function (navItem) {
-            SelectorEngine.children(navItem, Selector$8.NAV_LINKS).forEach(function (item) {
-              return item.classList.add(ClassName$8.ACTIVE);
+          SelectorEngine.prev(listGroup, Selector$9.NAV_ITEMS).forEach(function (navItem) {
+            SelectorEngine.children(navItem, Selector$9.NAV_LINKS).forEach(function (item) {
+              return item.classList.add(ClassName$9.ACTIVE);
             });
           });
         });
       }
 
-      EventHandler.trigger(this._scrollElement, Event$9.ACTIVATE, {
+      EventHandler.trigger(this._scrollElement, Event$a.ACTIVATE, {
         relatedTarget: target
       });
     };
 
     _proto._clear = function _clear() {
       makeArray(SelectorEngine.find(this._selector)).filter(function (node) {
-        return node.classList.contains(ClassName$8.ACTIVE);
+        return node.classList.contains(ClassName$9.ACTIVE);
       }).forEach(function (node) {
-        return node.classList.remove(ClassName$8.ACTIVE);
+        return node.classList.remove(ClassName$9.ACTIVE);
       });
     } // Static
     ;
 
     ScrollSpy.jQueryInterface = function jQueryInterface(config) {
       return this.each(function () {
-        var data = Data.getData(this, DATA_KEY$8);
+        var data = Data.getData(this, DATA_KEY$9);
 
         var _config = typeof config === 'object' && config;
 
@@ -4770,13 +5024,13 @@
     };
 
     ScrollSpy.getInstance = function getInstance(element) {
-      return Data.getData(element, DATA_KEY$8);
+      return Data.getData(element, DATA_KEY$9);
     };
 
     _createClass(ScrollSpy, null, [{
       key: "VERSION",
       get: function get() {
-        return VERSION$8;
+        return VERSION$9;
       }
     }, {
       key: "Default",
@@ -4794,12 +5048,12 @@
    */
 
 
-  EventHandler.on(window, Event$9.LOAD_DATA_API, function () {
-    makeArray(SelectorEngine.find(Selector$8.DATA_SPY)).forEach(function (spy) {
+  EventHandler.on(window, Event$a.LOAD_DATA_API, function () {
+    makeArray(SelectorEngine.find(Selector$9.DATA_SPY)).forEach(function (spy) {
       return new ScrollSpy(spy, Manipulator.getDataAttributes(spy));
     });
   });
-  var $$9 = getjQuery();
+  var $$a = getjQuery();
   /**
    * ------------------------------------------------------------------------
    * jQuery
@@ -4808,13 +5062,13 @@
 
   /* istanbul ignore if */
 
-  if ($$9) {
-    var JQUERY_NO_CONFLICT$8 = $$9.fn[NAME$8];
-    $$9.fn[NAME$8] = ScrollSpy.jQueryInterface;
-    $$9.fn[NAME$8].Constructor = ScrollSpy;
+  if ($$a) {
+    var JQUERY_NO_CONFLICT$9 = $$a.fn[NAME$9];
+    $$a.fn[NAME$9] = ScrollSpy.jQueryInterface;
+    $$a.fn[NAME$9].Constructor = ScrollSpy;
 
-    $$9.fn[NAME$8].noConflict = function () {
-      $$9.fn[NAME$8] = JQUERY_NO_CONFLICT$8;
+    $$a.fn[NAME$9].noConflict = function () {
+      $$a.fn[NAME$9] = JQUERY_NO_CONFLICT$9;
       return ScrollSpy.jQueryInterface;
     };
   }
@@ -4825,26 +5079,26 @@
    * ------------------------------------------------------------------------
    */
 
-  var NAME$9 = 'tab';
-  var VERSION$9 = '5.0.0';
-  var DATA_KEY$9 = 'bs.tab';
-  var EVENT_KEY$9 = "." + DATA_KEY$9;
-  var DATA_API_KEY$7 = '.data-api';
-  var Event$a = {
-    HIDE: "hide" + EVENT_KEY$9,
-    HIDDEN: "hidden" + EVENT_KEY$9,
-    SHOW: "show" + EVENT_KEY$9,
-    SHOWN: "shown" + EVENT_KEY$9,
-    CLICK_DATA_API: "click" + EVENT_KEY$9 + DATA_API_KEY$7
+  var NAME$a = 'tab';
+  var VERSION$a = '5.0.0';
+  var DATA_KEY$a = 'bs.tab';
+  var EVENT_KEY$a = "." + DATA_KEY$a;
+  var DATA_API_KEY$8 = '.data-api';
+  var Event$b = {
+    HIDE: "hide" + EVENT_KEY$a,
+    HIDDEN: "hidden" + EVENT_KEY$a,
+    SHOW: "show" + EVENT_KEY$a,
+    SHOWN: "shown" + EVENT_KEY$a,
+    CLICK_DATA_API: "click" + EVENT_KEY$a + DATA_API_KEY$8
   };
-  var ClassName$9 = {
+  var ClassName$a = {
     DROPDOWN_MENU: 'dropdown-menu',
     ACTIVE: 'active',
     DISABLED: 'disabled',
     FADE: 'fade',
     SHOW: 'show'
   };
-  var Selector$9 = {
+  var Selector$a = {
     DROPDOWN: '.dropdown',
     NAV_LIST_GROUP: '.nav, .list-group',
     ACTIVE: '.active',
@@ -4864,7 +5118,7 @@
   function () {
     function Tab(element) {
       this._element = element;
-      Data.setData(this._element, DATA_KEY$9, this);
+      Data.setData(this._element, DATA_KEY$a, this);
     } // Getters
 
 
@@ -4874,16 +5128,16 @@
     _proto.show = function show() {
       var _this = this;
 
-      if (this._element.parentNode && this._element.parentNode.nodeType === Node.ELEMENT_NODE && this._element.classList.contains(ClassName$9.ACTIVE) || this._element.classList.contains(ClassName$9.DISABLED)) {
+      if (this._element.parentNode && this._element.parentNode.nodeType === Node.ELEMENT_NODE && this._element.classList.contains(ClassName$a.ACTIVE) || this._element.classList.contains(ClassName$a.DISABLED)) {
         return;
       }
 
       var previous;
       var target = getElementFromSelector(this._element);
-      var listElement = SelectorEngine.closest(this._element, Selector$9.NAV_LIST_GROUP);
+      var listElement = SelectorEngine.closest(this._element, Selector$a.NAV_LIST_GROUP);
 
       if (listElement) {
-        var itemSelector = listElement.nodeName === 'UL' || listElement.nodeName === 'OL' ? Selector$9.ACTIVE_UL : Selector$9.ACTIVE;
+        var itemSelector = listElement.nodeName === 'UL' || listElement.nodeName === 'OL' ? Selector$a.ACTIVE_UL : Selector$a.ACTIVE;
         previous = makeArray(SelectorEngine.find(itemSelector, listElement));
         previous = previous[previous.length - 1];
       }
@@ -4891,12 +5145,12 @@
       var hideEvent = null;
 
       if (previous) {
-        hideEvent = EventHandler.trigger(previous, Event$a.HIDE, {
+        hideEvent = EventHandler.trigger(previous, Event$b.HIDE, {
           relatedTarget: this._element
         });
       }
 
-      var showEvent = EventHandler.trigger(this._element, Event$a.SHOW, {
+      var showEvent = EventHandler.trigger(this._element, Event$b.SHOW, {
         relatedTarget: previous
       });
 
@@ -4907,10 +5161,10 @@
       this._activate(this._element, listElement);
 
       var complete = function complete() {
-        EventHandler.trigger(previous, Event$a.HIDDEN, {
+        EventHandler.trigger(previous, Event$b.HIDDEN, {
           relatedTarget: _this._element
         });
-        EventHandler.trigger(_this._element, Event$a.SHOWN, {
+        EventHandler.trigger(_this._element, Event$b.SHOWN, {
           relatedTarget: previous
         });
       };
@@ -4923,7 +5177,7 @@
     };
 
     _proto.dispose = function dispose() {
-      Data.removeData(this._element, DATA_KEY$9);
+      Data.removeData(this._element, DATA_KEY$a);
       this._element = null;
     } // Private
     ;
@@ -4931,9 +5185,9 @@
     _proto._activate = function _activate(element, container, callback) {
       var _this2 = this;
 
-      var activeElements = container && (container.nodeName === 'UL' || container.nodeName === 'OL') ? SelectorEngine.find(Selector$9.ACTIVE_UL, container) : SelectorEngine.children(container, Selector$9.ACTIVE);
+      var activeElements = container && (container.nodeName === 'UL' || container.nodeName === 'OL') ? SelectorEngine.find(Selector$a.ACTIVE_UL, container) : SelectorEngine.children(container, Selector$a.ACTIVE);
       var active = activeElements[0];
-      var isTransitioning = callback && active && active.classList.contains(ClassName$9.FADE);
+      var isTransitioning = callback && active && active.classList.contains(ClassName$a.FADE);
 
       var complete = function complete() {
         return _this2._transitionComplete(element, active, callback);
@@ -4941,7 +5195,7 @@
 
       if (active && isTransitioning) {
         var transitionDuration = getTransitionDurationFromElement(active);
-        active.classList.remove(ClassName$9.SHOW);
+        active.classList.remove(ClassName$a.SHOW);
         EventHandler.one(active, TRANSITION_END, complete);
         emulateTransitionEnd(active, transitionDuration);
       } else {
@@ -4951,11 +5205,11 @@
 
     _proto._transitionComplete = function _transitionComplete(element, active, callback) {
       if (active) {
-        active.classList.remove(ClassName$9.ACTIVE);
-        var dropdownChild = SelectorEngine.findOne(Selector$9.DROPDOWN_ACTIVE_CHILD, active.parentNode);
+        active.classList.remove(ClassName$a.ACTIVE);
+        var dropdownChild = SelectorEngine.findOne(Selector$a.DROPDOWN_ACTIVE_CHILD, active.parentNode);
 
         if (dropdownChild) {
-          dropdownChild.classList.remove(ClassName$9.ACTIVE);
+          dropdownChild.classList.remove(ClassName$a.ACTIVE);
         }
 
         if (active.getAttribute('role') === 'tab') {
@@ -4963,7 +5217,7 @@
         }
       }
 
-      element.classList.add(ClassName$9.ACTIVE);
+      element.classList.add(ClassName$a.ACTIVE);
 
       if (element.getAttribute('role') === 'tab') {
         element.setAttribute('aria-selected', true);
@@ -4971,16 +5225,16 @@
 
       reflow(element);
 
-      if (element.classList.contains(ClassName$9.FADE)) {
-        element.classList.add(ClassName$9.SHOW);
+      if (element.classList.contains(ClassName$a.FADE)) {
+        element.classList.add(ClassName$a.SHOW);
       }
 
-      if (element.parentNode && element.parentNode.classList.contains(ClassName$9.DROPDOWN_MENU)) {
-        var dropdownElement = SelectorEngine.closest(element, Selector$9.DROPDOWN);
+      if (element.parentNode && element.parentNode.classList.contains(ClassName$a.DROPDOWN_MENU)) {
+        var dropdownElement = SelectorEngine.closest(element, Selector$a.DROPDOWN);
 
         if (dropdownElement) {
-          makeArray(SelectorEngine.find(Selector$9.DROPDOWN_TOGGLE)).forEach(function (dropdown) {
-            return dropdown.classList.add(ClassName$9.ACTIVE);
+          makeArray(SelectorEngine.find(Selector$a.DROPDOWN_TOGGLE)).forEach(function (dropdown) {
+            return dropdown.classList.add(ClassName$a.ACTIVE);
           });
         }
 
@@ -4995,7 +5249,7 @@
 
     Tab.jQueryInterface = function jQueryInterface(config) {
       return this.each(function () {
-        var data = Data.getData(this, DATA_KEY$9) || new Tab(this);
+        var data = Data.getData(this, DATA_KEY$a) || new Tab(this);
 
         if (typeof config === 'string') {
           if (typeof data[config] === 'undefined') {
@@ -5008,13 +5262,13 @@
     };
 
     Tab.getInstance = function getInstance(element) {
-      return Data.getData(element, DATA_KEY$9);
+      return Data.getData(element, DATA_KEY$a);
     };
 
     _createClass(Tab, null, [{
       key: "VERSION",
       get: function get() {
-        return VERSION$9;
+        return VERSION$a;
       }
     }]);
 
@@ -5027,12 +5281,12 @@
    */
 
 
-  EventHandler.on(document, Event$a.CLICK_DATA_API, Selector$9.DATA_TOGGLE, function (event) {
+  EventHandler.on(document, Event$b.CLICK_DATA_API, Selector$a.DATA_TOGGLE, function (event) {
     event.preventDefault();
-    var data = Data.getData(this, DATA_KEY$9) || new Tab(this);
+    var data = Data.getData(this, DATA_KEY$a) || new Tab(this);
     data.show();
   });
-  var $$a = getjQuery();
+  var $$b = getjQuery();
   /**
    * ------------------------------------------------------------------------
    * jQuery
@@ -5042,13 +5296,13 @@
 
   /* istanbul ignore if */
 
-  if ($$a) {
-    var JQUERY_NO_CONFLICT$9 = $$a.fn[NAME$9];
-    $$a.fn[NAME$9] = Tab.jQueryInterface;
-    $$a.fn[NAME$9].Constructor = Tab;
+  if ($$b) {
+    var JQUERY_NO_CONFLICT$a = $$b.fn[NAME$a];
+    $$b.fn[NAME$a] = Tab.jQueryInterface;
+    $$b.fn[NAME$a].Constructor = Tab;
 
-    $$a.fn[NAME$9].noConflict = function () {
-      $$a.fn[NAME$9] = JQUERY_NO_CONFLICT$9;
+    $$b.fn[NAME$a].noConflict = function () {
+      $$b.fn[NAME$a] = JQUERY_NO_CONFLICT$a;
       return Tab.jQueryInterface;
     };
   }
@@ -5059,18 +5313,18 @@
    * ------------------------------------------------------------------------
    */
 
-  var NAME$a = 'toast';
-  var VERSION$a = '5.0.0';
-  var DATA_KEY$a = 'bs.toast';
-  var EVENT_KEY$a = "." + DATA_KEY$a;
-  var Event$b = {
-    CLICK_DISMISS: "click.dismiss" + EVENT_KEY$a,
-    HIDE: "hide" + EVENT_KEY$a,
-    HIDDEN: "hidden" + EVENT_KEY$a,
-    SHOW: "show" + EVENT_KEY$a,
-    SHOWN: "shown" + EVENT_KEY$a
+  var NAME$b = 'toast';
+  var VERSION$b = '5.0.0';
+  var DATA_KEY$b = 'bs.toast';
+  var EVENT_KEY$b = "." + DATA_KEY$b;
+  var Event$c = {
+    CLICK_DISMISS: "click.dismiss" + EVENT_KEY$b,
+    HIDE: "hide" + EVENT_KEY$b,
+    HIDDEN: "hidden" + EVENT_KEY$b,
+    SHOW: "show" + EVENT_KEY$b,
+    SHOWN: "shown" + EVENT_KEY$b
   };
-  var ClassName$a = {
+  var ClassName$b = {
     FADE: 'fade',
     HIDE: 'hide',
     SHOW: 'show',
@@ -5086,7 +5340,7 @@
     autohide: true,
     delay: 500
   };
-  var Selector$a = {
+  var Selector$b = {
     DATA_DISMISS: '[data-dismiss="toast"]'
   };
   /**
@@ -5105,7 +5359,7 @@
 
       this._setListeners();
 
-      Data.setData(element, DATA_KEY$a, this);
+      Data.setData(element, DATA_KEY$b, this);
     } // Getters
 
 
@@ -5115,22 +5369,22 @@
     _proto.show = function show() {
       var _this = this;
 
-      var showEvent = EventHandler.trigger(this._element, Event$b.SHOW);
+      var showEvent = EventHandler.trigger(this._element, Event$c.SHOW);
 
       if (showEvent.defaultPrevented) {
         return;
       }
 
       if (this._config.animation) {
-        this._element.classList.add(ClassName$a.FADE);
+        this._element.classList.add(ClassName$b.FADE);
       }
 
       var complete = function complete() {
-        _this._element.classList.remove(ClassName$a.SHOWING);
+        _this._element.classList.remove(ClassName$b.SHOWING);
 
-        _this._element.classList.add(ClassName$a.SHOW);
+        _this._element.classList.add(ClassName$b.SHOW);
 
-        EventHandler.trigger(_this._element, Event$b.SHOWN);
+        EventHandler.trigger(_this._element, Event$c.SHOWN);
 
         if (_this._config.autohide) {
           _this._timeout = setTimeout(function () {
@@ -5139,11 +5393,11 @@
         }
       };
 
-      this._element.classList.remove(ClassName$a.HIDE);
+      this._element.classList.remove(ClassName$b.HIDE);
 
       reflow(this._element);
 
-      this._element.classList.add(ClassName$a.SHOWING);
+      this._element.classList.add(ClassName$b.SHOWING);
 
       if (this._config.animation) {
         var transitionDuration = getTransitionDurationFromElement(this._element);
@@ -5157,23 +5411,23 @@
     _proto.hide = function hide() {
       var _this2 = this;
 
-      if (!this._element.classList.contains(ClassName$a.SHOW)) {
+      if (!this._element.classList.contains(ClassName$b.SHOW)) {
         return;
       }
 
-      var hideEvent = EventHandler.trigger(this._element, Event$b.HIDE);
+      var hideEvent = EventHandler.trigger(this._element, Event$c.HIDE);
 
       if (hideEvent.defaultPrevented) {
         return;
       }
 
       var complete = function complete() {
-        _this2._element.classList.add(ClassName$a.HIDE);
+        _this2._element.classList.add(ClassName$b.HIDE);
 
-        EventHandler.trigger(_this2._element, Event$b.HIDDEN);
+        EventHandler.trigger(_this2._element, Event$c.HIDDEN);
       };
 
-      this._element.classList.remove(ClassName$a.SHOW);
+      this._element.classList.remove(ClassName$b.SHOW);
 
       if (this._config.animation) {
         var transitionDuration = getTransitionDurationFromElement(this._element);
@@ -5188,12 +5442,12 @@
       clearTimeout(this._timeout);
       this._timeout = null;
 
-      if (this._element.classList.contains(ClassName$a.SHOW)) {
-        this._element.classList.remove(ClassName$a.SHOW);
+      if (this._element.classList.contains(ClassName$b.SHOW)) {
+        this._element.classList.remove(ClassName$b.SHOW);
       }
 
-      EventHandler.off(this._element, Event$b.CLICK_DISMISS);
-      Data.removeData(this._element, DATA_KEY$a);
+      EventHandler.off(this._element, Event$c.CLICK_DISMISS);
+      Data.removeData(this._element, DATA_KEY$b);
       this._element = null;
       this._config = null;
     } // Private
@@ -5201,14 +5455,14 @@
 
     _proto._getConfig = function _getConfig(config) {
       config = _objectSpread2({}, Default$7, {}, Manipulator.getDataAttributes(this._element), {}, typeof config === 'object' && config ? config : {});
-      typeCheckConfig(NAME$a, config, this.constructor.DefaultType);
+      typeCheckConfig(NAME$b, config, this.constructor.DefaultType);
       return config;
     };
 
     _proto._setListeners = function _setListeners() {
       var _this3 = this;
 
-      EventHandler.on(this._element, Event$b.CLICK_DISMISS, Selector$a.DATA_DISMISS, function () {
+      EventHandler.on(this._element, Event$c.CLICK_DISMISS, Selector$b.DATA_DISMISS, function () {
         return _this3.hide();
       });
     } // Static
@@ -5216,7 +5470,7 @@
 
     Toast.jQueryInterface = function jQueryInterface(config) {
       return this.each(function () {
-        var data = Data.getData(this, DATA_KEY$a);
+        var data = Data.getData(this, DATA_KEY$b);
 
         var _config = typeof config === 'object' && config;
 
@@ -5235,13 +5489,13 @@
     };
 
     Toast.getInstance = function getInstance(element) {
-      return Data.getData(element, DATA_KEY$a);
+      return Data.getData(element, DATA_KEY$b);
     };
 
     _createClass(Toast, null, [{
       key: "VERSION",
       get: function get() {
-        return VERSION$a;
+        return VERSION$b;
       }
     }, {
       key: "DefaultType",
@@ -5258,7 +5512,7 @@
     return Toast;
   }();
 
-  var $$b = getjQuery();
+  var $$c = getjQuery();
   /**
    * ------------------------------------------------------------------------
    * jQuery
@@ -5268,13 +5522,13 @@
 
   /* istanbul ignore if */
 
-  if ($$b) {
-    var JQUERY_NO_CONFLICT$a = $$b.fn[NAME$a];
-    $$b.fn[NAME$a] = Toast.jQueryInterface;
-    $$b.fn[NAME$a].Constructor = Toast;
+  if ($$c) {
+    var JQUERY_NO_CONFLICT$b = $$c.fn[NAME$b];
+    $$c.fn[NAME$b] = Toast.jQueryInterface;
+    $$c.fn[NAME$b].Constructor = Toast;
 
-    $$b.fn[NAME$a].noConflict = function () {
-      $$b.fn[NAME$a] = JQUERY_NO_CONFLICT$a;
+    $$c.fn[NAME$b].noConflict = function () {
+      $$c.fn[NAME$b] = JQUERY_NO_CONFLICT$b;
       return Toast.jQueryInterface;
     };
   }
@@ -5292,6 +5546,7 @@
     Collapse: Collapse,
     Dropdown: Dropdown,
     Modal: Modal,
+    OffCanvas: OffCanvas,
     Popover: Popover,
     ScrollSpy: ScrollSpy,
     Tab: Tab,

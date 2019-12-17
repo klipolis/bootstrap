@@ -5075,7 +5075,7 @@ button.close {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1050;
+  z-index: 1060;
   display: none;
   width: 100%;
   height: 100%;
@@ -5160,7 +5160,7 @@ button.close {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1040;
+  z-index: 1050;
   width: 100vw;
   height: 100vh;
   background-color: #000;
@@ -5256,7 +5256,7 @@ button.close {
 }
 .tooltip {
   position: absolute;
-  z-index: 1070;
+  z-index: 1080;
   display: block;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -5358,7 +5358,7 @@ button.close {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1060;
+  z-index: 1070;
   display: block;
   max-width: 276px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -5738,6 +5738,81 @@ button.close {
 .spinner-grow-sm {
   width: 1rem;
   height: 1rem;
+}
+
+.offcanvas {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100%;
+  max-width: 100%;
+  padding: 1rem 2rem;
+  overflow-y: auto;
+  color: #000;
+  background-color: #fff;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.6) !important;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(-100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .offcanvas {
+    transition: none;
+  }
+}
+
+.offcanvas-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.offcanvas-header .close {
+  padding: 1rem 1rem;
+  margin: -2rem -2rem -1rem auto;
+}
+
+.offcanvas-right {
+  right: 0;
+  left: auto;
+  transform: translateX(100%);
+}
+
+.offcanvas-bottom {
+  top: auto;
+  right: 0;
+  width: 100%;
+  max-height: 50%;
+  transform: translateY(100%);
+}
+
+@media (min-width: 768px) {
+  .offcanvas:not(.offcanvas-bottom) {
+    width: 390px;
+  }
+
+  .offcanvas-bottom {
+    max-height: 200px;
+  }
+}
+.offcanvas.show {
+  transform: none;
+}
+
+.offcanvas-freeze,
+.offcanvas-blur {
+  overflow: hidden !important;
+}
+
+.offcanvas-blur::before {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1039;
+  width: 100vw;
+  height: 100vh;
+  content: "";
+  background-color: rgba(252, 255, 255, 0.4);
 }
 
 .clearfix::after {
