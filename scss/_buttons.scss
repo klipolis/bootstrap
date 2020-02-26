@@ -28,17 +28,9 @@
     box-shadow: $btn-focus-box-shadow;
   }
 
-  // Disabled comes first so active can properly restyle
-  &.disabled,
-  &:disabled {
-    pointer-events: none;
-    opacity: $btn-disabled-opacity;
-    @include box-shadow(none);
-  }
-
-  &:not(:disabled):not(.disabled) {
-    // Re-add cursor style for checkbox and radio buttons
-    cursor: if($enable-pointer-cursor-for-buttons, pointer, null);
+  &:active,
+  &.active {
+    @include box-shadow($btn-active-box-shadow);
 
     &:active,
     &.active {
@@ -49,11 +41,14 @@
       }
     }
   }
-}
 
-// stylelint-disable-next-line selector-no-qualifying-type
-fieldset:disabled .btn {
-  pointer-events: none;
+  &:disabled,
+  &.disabled,
+  fieldset:disabled & { // stylelint-disable-line selector-no-qualifying-type
+    pointer-events: none;
+    opacity: $btn-disabled-opacity;
+    @include box-shadow(none);
+  }
 }
 
 

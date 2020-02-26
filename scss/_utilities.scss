@@ -409,7 +409,7 @@ $utilities: map-merge(
       responsive: true,
       property: text-align,
       class: text,
-      values: left right center justify
+      values: left right center
     ),
     "color": (
       property: color,
@@ -465,8 +465,8 @@ $utilities: map-merge(
       class: font,
       values: italic normal
     ),
-    "overflow-wrap": (
-      property: overflow-wrap word-break, // word-break for IE & < Edge 18
+    "word-wrap": (
+      property: word-wrap,
       class: text,
       values: (break: break-word)
     ),
@@ -474,6 +474,15 @@ $utilities: map-merge(
       property: font-family,
       class: font,
       values: (monospace: $font-family-monospace)
+    ),
+    "user-select": (
+      property: user-select,
+      values: all auto none
+    ),
+    "pointer-events": (
+      property: pointer-events,
+      class: pe,
+      values: none auto,
     ),
     "rounded": (
       property: border-radius,

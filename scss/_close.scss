@@ -12,14 +12,14 @@
     text-decoration: none;
   }
 
-  &.disabled,
-  &:disabled {
-    pointer-events: none;
-  }
-
   &:hover,
   &:focus {
     opacity: .75;
+  }
+
+  &:disabled,
+  &.disabled {
+    pointer-events: none;
   }
 }
 
