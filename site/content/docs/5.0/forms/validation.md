@@ -32,7 +32,7 @@ For custom Bootstrap form validation messages, you'll need to add the `novalidat
 Custom feedback styles apply custom colors, borders, focus styles, and background icons to better communicate feedback. Background icons for `<select>`s are only available with `.form-select`, and not `.form-control`.
 
 {{< example >}}
-<form class="row g-2 needs-validation" novalidate>
+<form class="row g-3 needs-validation" novalidate>
   <div class="col-md-4">
     <label for="validationCustom01">First name</label>
     <input type="text" class="form-control" id="validationCustom01" value="Mark" required>
@@ -107,7 +107,7 @@ Not interested in custom validation feedback messages or writing JavaScript to c
 While these feedback styles cannot be styled with CSS, you can still customize the feedback text through JavaScript.
 
 {{< example >}}
-<form class="row g-2">
+<form class="row g-3">
   <div class="col-md-4">
     <label for="validationDefault01">First name</label>
     <input type="text" class="form-control" id="validationDefault01" value="Mark" required>
@@ -159,7 +159,7 @@ While these feedback styles cannot be styled with CSS, you can still customize t
 We recommend using client-side validation, but in case you require server-side validation, you can indicate invalid and valid form fields with `.is-invalid` and `.is-valid`. Note that `.invalid-feedback` is also supported with these classes.
 
 {{< example >}}
-<form class="row g-2">
+<form class="row g-3">
   <div class="col-md-4">
     <label for="validationServer01">First name</label>
     <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required>
@@ -288,7 +288,7 @@ Validation styles are available for the following form controls and components:
 If your form layout allows it, you can swap the `.{valid|invalid}-feedback` classes for `.{valid|invalid}-tooltip` classes to display validation feedback in a styled tooltip. Be sure to have a parent with `position: relative` on it for tooltip positioning. In the example below, our column classes have this already, but your project may require an alternative setup.
 
 {{< example >}}
-<form class="row g-2 needs-validation" novalidate>
+<form class="row g-3 needs-validation" novalidate>
   <div class="col-md-4 position-relative">
     <label for="validationTooltip01">First name</label>
     <input type="text" class="form-control" id="validationTooltip01" value="Mark" required>

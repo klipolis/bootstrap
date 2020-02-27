@@ -43,7 +43,7 @@ Breaking it down, here's how it works:
 - Grid breakpoints are based on minimum width media queries, meaning **they apply to that one breakpoint and all those above it** (e.g., `.col-sm-4` applies to small, medium, large, and extra large devices, but not the first `xs` breakpoint).
 - You can use predefined grid classes (like `.col-4`) or [Sass mixins](#sass-mixins) for more semantic markup.
 - The horizontal gutter width can be changed with `.gx-*` classes like `.gx-2` (smaller horizontal gutters) or `.gx-xl-4` (larger horizontal gutters on viewports larger than the `xl` breakpoint).
-- The vertical gutter width can be changed with `.gy-*` classes like `.gy-2` (smaller vertical gutters) or `.gy-xl-4` (larger vertical gutters on viewports larger than the `xl` breakpoint). To achieve vertical gutters, additional margin is added to the bottom of each column. The `.row` counteracts this margin to the bottom with a negative margin.
+- The vertical gutter width can be changed with `.gy-*` classes like `.gy-2` (smaller vertical gutters) or `.gy-xl-4` (larger vertical gutters on viewports larger than the `xl` breakpoint). To achieve vertical gutters, additional margin is added to the top of each column. The `.row` counteracts this margin to the top with a negative margin.
 - The gutter width in both directions can be changed with `.g-*` classes like `.g-2` (smaller gutters) or `.g-xl-4` (larger gutters on viewports larger than the `xl` breakpoint)
 
 Be aware of the limitations and [bugs around flexbox](https://github.com/philipwalton/flexbugs), like the [inability to use some HTML elements as flex containers](https://github.com/philipwalton/flexbugs#flexbug-9).
@@ -103,7 +103,7 @@ See how aspects of the Bootstrap grid system work across multiple devices with a
     </tr>
     <tr>
       <th class="text-nowrap" scope="row">Gutter width</th>
-      <td colspan="5">2rem (1rem on each side of a column)</td>
+      <td colspan="5">1.5rem (.75rem on each side of a column)</td>
     </tr>
     <tr>
       <th class="text-nowrap" scope="row">Nestable</th>
@@ -280,7 +280,7 @@ Don't want your columns to simply stack in some grid tiers? Use a combination of
 
 ### Row columns
 
-Use the responsive `.row-cols-*` classes to quickly set the number of columns that best render your content and layout. Whereas normal `.col-*` classes apply to the individual columns (e.g., `.col-md-4`), the row columns classes are set on the parent `.row` as a shortcut.
+Use the responsive `.row-cols-*` classes to quickly set the number of columns that best render your content and layout. Whereas normal `.col-*` classes apply to the individual columns (e.g., `.col-md-4`), the row columns classes are set on the parent `.row` as a shortcut. With `.row-cols-auto` you can give the columns their natural width.
 
 Use these row columns classes to quickly create basic grid layouts or to control your card layouts.
 
@@ -298,6 +298,17 @@ Use these row columns classes to quickly create basic grid layouts or to control
 {{< example class="bd-example-row" >}}
 <div class="container">
   <div class="row row-cols-3">
+    <div class="col">Column</div>
+    <div class="col">Column</div>
+    <div class="col">Column</div>
+    <div class="col">Column</div>
+  </div>
+</div>
+{{< /example >}}
+
+{{< example class="bd-example-row" >}}
+<div class="container">
+  <div class="row row-cols-auto">
     <div class="col">Column</div>
     <div class="col">Column</div>
     <div class="col">Column</div>
@@ -355,31 +366,31 @@ You can also use the accompanying Sass mixin, `row-cols()`:
 
 ## Gutters
 
-Gutters can be responsively adjusted by breakpoint-specific gutter classes in as well horizontal, vertical and both directions. By default, `.row`s have a horizontal gutter of `2rem`. Removing this default gutter is possible by adding the `.g-0` class.
+Gutters can be responsively adjusted by breakpoint-specific gutter classes in as well horizontal, vertical and both directions. By default, `.row`s have a horizontal gutter of `1.5rem`. Removing this default gutter is possible by adding the `.g-0` class.
 
 ### Changing the gutters
 
-Classes are built from the `$gutters` Sass map ranging from `.5rem` to `6rem`. Each value in the Sass map generates classes for gutters in vertical, horizontal or both ways.
+Classes are built from the `$gutters` Sass map which is inherited from the `$spacers` Sass map.
 
 ```sass
-$grid-gutter-width: 2rem;
+$grid-gutter-width: 1.5rem;
 $gutters: (
   0: 0,
-  1: $grid-gutter-width * .25,
-  2: $grid-gutter-width * .5,
-  3: $grid-gutter-width,
-  4: $grid-gutter-width * 1.5,
-  5: $grid-gutter-width * 3,
+  1: $spacer * .25,
+  2: $spacer * .5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
 );
 ```
 
 ### Horizontal gutters
 
-`.gx-*` classes can be used to control the horizontal gutter widths. The `.container` or `.container-fluid` parent may need to be adjusted if larger gutters are used too to avoid unwanted overflow, using a matching padding utility. For example, in the following example we've increased the padding with `.px-lg-5` at the large (`lg`) breakpoint and above:
+`.gx-*` classes can be used to control the horizontal gutter widths. The `.container` or `.container-fluid` parent may need to be adjusted if larger gutters are used too to avoid unwanted overflow, using a matching padding utility. For example, in the following example we've increased the padding with `.px-4`:
 
 {{< example >}}
-<div class="container px-lg-4">
-  <div class="row gx-lg-4">
+<div class="container px-4">
+  <div class="row gx-5">
     <div class="col">
      <div class="p-3 border bg-light">Custom column padding</div>
     </div>
@@ -394,7 +405,7 @@ An alternative solution is to add a wrapper around the `.row` with the `.overflo
 
 {{< example >}}
 <div class="container overflow-hidden">
-  <div class="row gx-lg-4">
+  <div class="row gx-5">
     <div class="col">
      <div class="p-3 border bg-light">Custom column padding</div>
     </div>
@@ -411,7 +422,7 @@ An alternative solution is to add a wrapper around the `.row` with the `.overflo
 
 {{< example >}}
 <div class="container overflow-hidden">
-  <div class="row gy-lg-5">
+  <div class="row gy-5">
     <div class="col-6">
       <div class="p-3 border bg-light">Custom column padding</div>
     </div>
@@ -434,7 +445,7 @@ An alternative solution is to add a wrapper around the `.row` with the `.overflo
 
 {{< example >}}
 <div class="container">
-  <div class="row g-md-2">
+  <div class="row g-2">
     <div class="col-6">
       <div class="p-3 border bg-light">Custom column padding</div>
     </div>
@@ -774,7 +785,8 @@ To nest your content with the default grid, add a new `.row` with a set of `.col
     <div class="col-sm-3">
       Level 1: .col-sm-3
     </div>
-    <div class="col-sm-9 row">
+    <div class="col-sm-9">
+      <div class="row">
         <div class="col-8 col-sm-6">
           Level 2: .col-8 .col-sm-6
         </div>
@@ -829,7 +841,7 @@ Variables and maps determine the number of columns, the gutter width, and the me
 
 {{< highlight scss >}}
 $grid-columns:      12;
-$grid-gutter-width: 2rem;
+$grid-gutter-width: 1.5rem;
 
 $grid-breakpoints: (
   // Extra small screen / phone
@@ -926,7 +938,7 @@ The number of grid columns can be modified via Sass variables. `$grid-columns` i
 
 {{< highlight scss >}}
 $grid-columns: 12 !default;
-$grid-gutter-width: 2rem !default;
+$grid-gutter-width: 1.5rem !default;
 {{< /highlight >}}
 
 ### Grid tiers

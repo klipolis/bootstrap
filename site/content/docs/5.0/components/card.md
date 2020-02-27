@@ -536,7 +536,7 @@ When using card groups with footers, their content will automatically line up.
 Use the Bootstrap grid system and its [`.row-cols` classes]({{< docsref "/layout/grid#row-columns" >}}) to control how many grid columns (wrapped around your cards) you show per row. For example, here's `.row-cols-1` laying out the cards on one column, and `.row-cols-md-2` splitting four cards to equal width across multiple rows, from the medium breakpoint up.
 
 {{< example >}}
-<div class="row row-cols-1 row-cols-md-2 g-3">
+<div class="row row-cols-1 row-cols-md-2 g-4">
   <div class="col">
     <div class="card">
       {{< placeholder width="100%" height="140" class="card-img-top" text="Image cap" >}}
@@ -579,7 +579,7 @@ Use the Bootstrap grid system and its [`.row-cols` classes]({{< docsref "/layout
 Change it to `.row-cols-3` and you'll see the fourth card wrap.
 
 {{< example >}}
-<div class="row row-cols-1 row-cols-md-3 g-3">
+<div class="row row-cols-1 row-cols-md-3 g-4">
   <div class="col">
     <div class="card">
       {{< placeholder width="100%" height="140" class="card-img-top" text="Image cap" >}}
@@ -622,7 +622,7 @@ Change it to `.row-cols-3` and you'll see the fourth card wrap.
 When you need equal height, add `.h-100` to the cards. If you want equal heights by default, you can set `$card-height: 100%` in Sass.
 
 {{< example >}}
-<div class="row row-cols-1 row-cols-md-3 g-3">
+<div class="row row-cols-1 row-cols-md-3 g-4">
   <div class="col">
     <div class="card h-100">
       {{< placeholder width="100%" height="140" class="card-img-top" text="Image cap" >}}
@@ -665,8 +665,8 @@ When you need equal height, add `.h-100` to the cards. If you want equal heights
 Just like with card groups, card footers will automatically line up.
 
 {{< example >}}
-<ul class="row g-3">
-  <li class="col-sm">
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col">
     <div class="card h-100">
       {{< placeholder width="100%" height="180" class="card-img-top" text="Image cap" >}}
       <div class="card-body">
@@ -677,8 +677,8 @@ Just like with card groups, card footers will automatically line up.
         <small class="text-muted">Last updated 3 mins ago</small>
       </div>
     </div>
-  </li>
-  <li class="col-sm">
+  </div>
+  <div class="col">
     <div class="card h-100">
       {{< placeholder width="100%" height="180" class="card-img-top" text="Image cap" >}}
       <div class="card-body">
@@ -689,8 +689,8 @@ Just like with card groups, card footers will automatically line up.
         <small class="text-muted">Last updated 3 mins ago</small>
       </div>
     </div>
-  </li>
-  <li class="col-sm">
+  </div>
+  <div class="col">
     <div class="card h-100">
       {{< placeholder width="100%" height="180" class="card-img-top" text="Image cap" >}}
       <div class="card-body">
@@ -701,8 +701,8 @@ Just like with card groups, card footers will automatically line up.
         <small class="text-muted">Last updated 3 mins ago</small>
       </div>
     </div>
-  </li>
-</ul>
+  </div>
+</div>
 {{< /example >}}
 
 ### Masonry

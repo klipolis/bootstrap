@@ -3,6 +3,14 @@
 // Make use of `.g-*`, `.gx-*` or `.gy-*` utilities to change spacing between the columns.
 
 @if $enable-grid-classes {
+  .row {
+    @include make-row();
+
+    > * {
+      @include make-col-ready();
+    }
+  }
+
   @each $breakpoint in map-keys($grid-breakpoints) {
     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 

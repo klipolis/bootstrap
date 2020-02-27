@@ -61,7 +61,7 @@ If you want to have `<input readonly>` elements in your form styled as plain tex
 {{< /example >}}
 
 {{< example >}}
-<form class="row g-2">
+<form class="row g-3">
   <div class="col-auto">
     <label for="staticEmail2" class="sr-only">Email</label>
     <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="email@example.com">
