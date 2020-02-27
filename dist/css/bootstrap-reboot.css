@@ -351,18 +351,6 @@ legend {
   }
 }
 
-@media (min-width: 1200px) {
-  legend {
-    font-size: 1.5rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  legend {
-    font-size: 1.5rem;
-  }
-}
-
 mark {
   padding: 0.2em;
   background-color: #fcf8e3;
