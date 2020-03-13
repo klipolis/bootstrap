@@ -418,7 +418,7 @@ An alternative solution is to add a wrapper around the `.row` with the `.overflo
 
 ### Vertical gutters
 
-`.gy-*` classes can be used to control the horizontal gutter widths. Like the horizontal gutters, the vertical gutters can cause some overflow below the `.row` at the end of a page. If this occurs, you add a wrapper around `.row` with the `.overflow-hidden` class:
+`.gy-*` classes can be used to control the vertical gutter widths. Like the horizontal gutters, the vertical gutters can cause some overflow below the `.row` at the end of a page. If this occurs, you add a wrapper around `.row` with the `.overflow-hidden` class:
 
 {{< example >}}
 <div class="container overflow-hidden">
@@ -464,7 +464,7 @@ An alternative solution is to add a wrapper around the `.row` with the `.overflo
 
 ### Row columns gutters
 
-Gutter classes can also be added to [row columns](#row-columns). In the following example we use as well responsive row columns as responsive gutter widths:
+Gutter classes can also be added to [row columns](#row-columns). In the following example, we use responsive row columns and responsive gutter classes.
 
 {{< example >}}
 <div class="container">
@@ -798,7 +798,7 @@ To nest your content with the default grid, add a new `.row` with a set of `.col
 </div>
 {{< /example >}}
 
-## Stand alone column classes
+## Standalone column classes
 
 The `.col-*` classes can also be used outside a `.row` to give an element a specific width. Whenever column classes are used as non direct children of a row, the paddings are omitted.
 

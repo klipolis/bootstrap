@@ -10,7 +10,13 @@
       @include make-col-ready();
     }
   }
+}
 
+// Gutters
+//
+// Make use of `.g-*`, `.gx-*` or `.gy-*` utilities to change spacing between the columns.
+
+@if $enable-grid-classes {
   @each $breakpoint in map-keys($grid-breakpoints) {
     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
