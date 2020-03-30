@@ -51,6 +51,8 @@ params:
   current_ruby_version: "5.0.0"
   docs_version:         "5.0"
   rfs_version:          "9.0.2"
+  docs_version:         "4.3"
+  github_org:           "https://github.com/twbs"
   repo:                 "https://github.com/twbs/bootstrap"
   twitter:              "getbootstrap"
   slack:                "https://bootstrap-slack.herokuapp.com/"

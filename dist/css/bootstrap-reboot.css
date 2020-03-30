@@ -1,5 +1,5 @@
 /*!
- * Bootstrap Reboot v5.0.0-alpha1 (https://getbootstrap.com/)
+ * Bootstrap Reboot v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
  * Copyright 2011-2020 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
@@ -152,6 +152,11 @@ small {
   font-size: 0.875em;
 }
 
+mark {
+  padding: 0.2em;
+  background-color: #fcf8e3;
+}
+
 sub,
 sup {
   position: relative;
@@ -170,11 +175,10 @@ sup {
 
 a {
   color: #0d6efd;
-  text-decoration: none;
+  text-decoration: underline;
 }
 a:hover {
   color: #024dbc;
-  text-decoration: underline;
 }
 
 a:not([href]), a:not([href]):hover {
@@ -229,16 +233,13 @@ figure {
   margin: 0 0 1rem;
 }
 
-img {
-  vertical-align: middle;
-}
-
+img,
 svg {
-  overflow: hidden;
   vertical-align: middle;
 }
 
 table {
+  caption-side: bottom;
   border-collapse: collapse;
 }
 
@@ -247,11 +248,11 @@ caption {
   padding-bottom: 0.5rem;
   color: #6c757d;
   text-align: left;
-  caption-side: bottom;
 }
 
 th {
   text-align: inherit;
+  text-align: -webkit-match-parent;
 }
 
 label {
@@ -323,7 +324,6 @@ input[type=month] {
 }
 
 textarea {
-  overflow: auto;
   resize: vertical;
 }
 
@@ -342,7 +342,6 @@ legend {
   margin-bottom: 0.5rem;
   font-size: calc(1.275rem + 0.3vw);
   line-height: inherit;
-  color: inherit;
   white-space: normal;
 }
 @media (min-width: 1200px) {
@@ -351,18 +350,28 @@ legend {
   }
 }
 
-mark {
-  padding: 0.2em;
-  background-color: #fcf8e3;
+@media (min-width: 1200px) {
+  legend {
+    font-size: 1.5rem;
+  }
 }
 
-progress {
-  vertical-align: baseline;
+legend + * {
+  clear: left;
 }
 
-::-webkit-datetime-edit {
-  overflow: visible;
-  line-height: 0;
+::-webkit-datetime-edit-fields-wrapper,
+::-webkit-datetime-edit-text,
+::-webkit-datetime-edit-minute,
+::-webkit-datetime-edit-hour-field,
+::-webkit-datetime-edit-day-field,
+::-webkit-datetime-edit-month-field,
+::-webkit-datetime-edit-year-field {
+  padding: 0;
+}
+
+::-webkit-inner-spin-button {
+  height: auto;
 }
 
 [type=search] {
@@ -392,12 +401,8 @@ summary {
   cursor: pointer;
 }
 
-template {
-  display: none;
-}
-
-main {
-  display: block;
+progress {
+  vertical-align: baseline;
 }
 
 [hidden] {

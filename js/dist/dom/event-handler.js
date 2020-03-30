@@ -1,5 +1,5 @@
 /*!
-  * Bootstrap event-handler.js v5.0.0 (https://getbootstrap.com/)
+  * Bootstrap event-handler.js v4.3.1 (https://getbootstrap.com/)
   * Copyright 2011-2020 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
@@ -279,7 +279,7 @@
         evt = document.createEvent('HTMLEvents');
         evt.initEvent(typeEvent, bubbles, true);
       } else {
-        evt = polyfill_js.createCustomEvent(event, {
+        evt = new CustomEvent(event, {
           bubbles: bubbles,
           cancelable: true
         });

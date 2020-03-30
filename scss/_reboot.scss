@@ -355,6 +355,7 @@ svg {
 // Prevent double borders
 
 table {
+  caption-side: bottom;
   border-collapse: collapse;
 }
 
@@ -363,7 +364,6 @@ caption {
   padding-bottom: $table-cell-padding;
   color: $table-caption-color;
   text-align: left;
-  caption-side: bottom;
 }
 
 // 1. Matches default `<td>` alignment by inheriting `text-align`.
@@ -500,23 +500,25 @@ fieldset {
   border: 0; // 2
 }
 
-
-// 1. Make the legend behave like a block element
-// 2. Same as above, but these properties are needed for IE
-// 3. Correct the color inheritance from `fieldset` elements in IE.
-// 4. Correct the text wrapping in Edge and IE.
+// 1. By using `float: left`, the legend will behave like a block element.
+//    This way the border of a fieldset wraps around the legend if present.
+// 2. Correct the text wrapping in Edge.
+// 3. Fix wrapping bug.
+//    See https://github.com/twbs/bootstrap/issues/29712
 
 legend {
-  display: contents; // 1
-  float: left; // 2
-  width: 100%; // 2
+  float: left; // 1
+  width: 100%;
   padding: 0;
   margin-bottom: $legend-margin-bottom;
   @include font-size($legend-font-size);
   font-weight: $legend-font-weight;
   line-height: inherit;
-  color: inherit; // 3
-  white-space: normal; // 4
+  white-space: normal; // 2
+
+  + * {
+    clear: left; // 3
+  }
 }
 
 // Fix height of inputs with a type of datetime-local, date, month, week, or time
